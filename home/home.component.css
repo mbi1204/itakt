@@ -1,0 +1,29 @@
+.mesa{
+    width: 20%;
+    height: 20%;   
+}
+.textMesa{
+    width: 60%;
+    height: 10%;
+  
+}
+.comensal{
+    width: 10%;
+    height: 10%; 
+}
+.textComensal{
+    width: 15%;
+    height: 10%;  
+}
+.mesero{
+    width: 10%;
+    height: 10%; 
+}
+.textMesero{
+    width: 60%;
+    height: 10%; 
+}
+.calendar{
+    width: 10%;
+    height: 10%; 
+}
