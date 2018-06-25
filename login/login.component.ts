@@ -21,12 +21,23 @@ export class LoginComponent implements OnInit {
   }
 
   login(): void {
+      var resultado, Error, Mensaje ;
+
     console.log('login()->'  + 'Usuario:' + this.usuario + 'Password' + this.password ); 
     this._Service.PostLogin(this.usuario, this.password).subscribe(
       result => {
         console.log(result);
 
-        this._router.navigate(["/home"]);
+        resultado = result.body;
+        Error   = resultado.response.oplError;
+        Mensaje = resultado.response.opcMensage;
+
+
+        if (Error== true){
+            alert(Mensaje);
+        }else {
+            this._router.navigate(["/home"]);
+        }        
       },
       error => {
         console.log(error);
