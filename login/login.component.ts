@@ -32,8 +32,10 @@ export class LoginComponent implements OnInit {
         Error   = resultado.response.oplError;
         Mensaje = resultado.response.opcMensage;
 
+        console.log("resultado" +  resultado);
 
-        if (Error== true){
+
+        if (Error == "true"){
             alert(Mensaje);
         }else {
             this._router.navigate(["/home"]);

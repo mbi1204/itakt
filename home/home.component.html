@@ -1,20 +1,26 @@
 <ActionBar title="Itakt" class="marca"></ActionBar>
+
+<ScrollView>
+   
 <StackLayout orientation="vertical">
     
 <GridLayout columns="auto, *, auto" rows="auto, *, auto" verticalAlignment="top" >
     <Image src="~/images/MesaBoton.png" class="mesa" row="0" col="0"></Image>
     <TextView  hint="Mesas" class="textMesa"         row="0" col="1" horizontalAlignment="left" ></TextView>
 
+    <DockLayout>
     <Image src="~/images/Comensal.png" class="calendar"   row="1" col="0"></Image>
-    <TextView  hint="Comensales" class="textComensal"     row="1" col="1" horizontalAlignment="left" margin="3"></TextView>
+    <TextView  hint="Comensales" class="textComensal"     row="1" col="1" horizontalAlignment="left"></TextView>
     <Image src="~/images/calendario.png" class="comensal" row="1" col="1" ></Image>
-    <TextView  hint="Fecha" class="textComensal"          row="1" col="1" ></TextView>
-
+    <TextView  hint="Fecha" class="textComensal"          row="1" col="2" horizontalAlignment="left"></TextView>
+</DockLayout>
 
     <Image src="~/images/Mesero.png"   class="mesero" row="2" col="0"></Image>
     <TextView  hint="Mesero" class="textMesero"  row="2" col="1" horizontalAlignment="left"></TextView>
 </GridLayout>
 
+
     
 </StackLayout>
+>
 
