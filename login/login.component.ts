@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { LoginService } from "../service/login.service";
 import {Router,ActivatedRoute,Params} from '@angular/router';
+import 'nativescript-localstorage';
 
 @Component({
   selector: "ns-login",
@@ -23,7 +24,15 @@ export class LoginComponent implements OnInit {
   login(): void {
       var resultado, Error, Mensaje ;
 
-    console.log('login()->'  + 'Usuario:' + this.usuario + 'Password' + this.password ); 
+      
+    localStorage.clear();
+
+    localStorage.setItem('Another Plugin', 'By Master Technology');
+    let LS = require( "nativescript-localstorage" );
+    
+    console.log (LS.getItem('Another Plugin'));
+
+    /*console.log('login()->'  + 'Usuario:' + this.usuario + 'Password' + this.password ); 
     this._Service.PostLogin(this.usuario, this.password).subscribe(
       result => {
         console.log(result);
@@ -53,6 +62,6 @@ export class LoginComponent implements OnInit {
             error.error._errors[0]._errorNum
         );
       }
-    );
+    );*/
   }
 }
