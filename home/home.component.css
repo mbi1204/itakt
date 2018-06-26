@@ -1,29 +1,25 @@
 .mesa{
-    width: 20%;
-    height: 20%;   
+    width: 8%;
+    height: 8%;   
 }
 .textMesa{
-    width: 60%;
-    height: 8%;
-  
+    width: 37%;    
 }
 .comensal{
-    width: 10%;
-    height: 10%; 
+    width: 8%;
+    height: 8%;
 }
 .textComensal{
-    width: 15%;
-    height: 8%;  
+    width: 37%;    
 }
 .mesero{
-    width: 10%;
-    height: 10%; 
+    width: 8%;
+    height: 8%;
 }
 .textMesero{
-    width: 60%;
-    height: 8%; 
+    width: 37%;   
 }
 .calendar{
-    width: 10%;
-    height: 10%; 
+    width: 8%;
+    height: 8%;
 }

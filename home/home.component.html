@@ -3,21 +3,34 @@
 <ScrollView>
    
 <StackLayout orientation="vertical">
-    
-<GridLayout columns="auto, *, auto" rows="auto, *, auto" verticalAlignment="top" >
-    <Image src="~/images/MesaBoton.png" class="mesa" row="0" col="0"></Image>
-    <TextView  hint="Mesas" class="textMesa"         row="0" col="1" horizontalAlignment="left" ></TextView>
 
-    <DockLayout>
-    <Image src="~/images/Comensal.png" class="calendar"   row="1" col="0"></Image>
-    <TextView  hint="Comensales" class="textComensal"     row="1" col="1" horizontalAlignment="left"></TextView>
-    <Image src="~/images/calendario.png" class="comensal" row="1" col="1" ></Image>
-    <TextView  hint="Fecha" class="textComensal"          row="1" col="2" horizontalAlignment="left"></TextView>
-</DockLayout>
+ <DockLayout>
+        <Image src="~/images/table.png" class="mesa"         row="0" col="0"></Image>
+        <TextView  hint="Mesas" class="textMesa"             row="0" col="1" horizontalAlignment="left" ></TextView>  
+        <Image src="~/images/orden.png"     class="mesa"     row="0" col="2" horizontalAlignment="center"></Image>
+        <TextView  hint="Orden" class="textMesa"             row="0" col="3" horizontalAlignment="left" ></TextView>          
+ </DockLayout>
 
-    <Image src="~/images/Mesero.png"   class="mesero" row="2" col="0"></Image>
-    <TextView  hint="Mesero" class="textMesero"  row="2" col="1" horizontalAlignment="left"></TextView>
-</GridLayout>
+ <DockLayout>
+        <Image src="~/images/Comensal.png" class="calendar"   row="1" col="0"></Image>
+        <TextView  hint="Comensales" class="textComensal"     row="1" col="1" horizontalAlignment="left" margin= "3"></TextView>
+        <Image src="~/images/calendar.png"class="calendar"    row="1" col="2" ></Image>
+        <TextView  hint="Fecha" class="textComensal"          row="1" col="3" horizontalAlignment="left"></TextView>
+ </DockLayout> 
+ 
+ <DockLayout>
+        <Image src="~/images/Mesero.png"   class="mesero" row="2" col="0"></Image>
+        <TextView  hint="Mesero" class="textMesero"       row="2" col="1" horizontalAlignment="left"></TextView>
+        <Image src="~/images/user.png"   class="mesero"   row="2" col="2"></Image>
+        <TextView  hint="Usuario" class="textComensal"    row="2" col="3" horizontalAlignment="left"></TextView>
+ </DockLayout>
+  
+<AbsoluteLayout width="210" height="210" backgroundColor="lightgray">
+        <Label text="10, 10" left="10" top="10" width="90" height="90" backgroundColor="red"></Label>
+        <Label text="110, 10" left="110" top="10" width="90" height="90" backgroundColor="green"></Label>
+        <Label text="110, 110" left="110" top="110" width="90" height="90" backgroundColor="blue"></Label>
+        <Label text="10, 110" left="10" top="110" width="90" height="90" backgroundColor="yellow"></Label>
+</AbsoluteLayout>
 
 
     
