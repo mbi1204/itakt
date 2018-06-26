@@ -27,10 +27,11 @@ export class LoginComponent implements OnInit {
       
     localStorage.clear();
 
-    localStorage.setItem('Another Plugin', 'By Master Technology');
-    let LS = require( "nativescript-localstorage" );
-    
-    console.log (LS.getItem('Another Plugin'));
+    localStorage.setItem('session', 'Adriana diaz gonzalez');
+
+  
+
+    this._router.navigate(["/home"]);
 
     /*console.log('login()->'  + 'Usuario:' + this.usuario + 'Password' + this.password ); 
     this._Service.PostLogin(this.usuario, this.password).subscribe(
