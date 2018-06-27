@@ -1,4 +1,8 @@
-<ActionBar title="Itakt" class="marca"></ActionBar>
+<ActionBar title="Itakt" class="marca">
+        <android>
+                <NavigationButton icon="~/images/menu.png"  tap="showSideDrawer" ></NavigationButton>
+        </android>
+</ActionBar>
 
 <ScrollView>
    
@@ -31,6 +35,29 @@
         <Label text="110, 110" left="110" top="110" width="90" height="90" backgroundColor="blue"></Label>
         <Label text="10, 110" left="10" top="110" width="90" height="90" backgroundColor="yellow"></Label>
 </AbsoluteLayout>
+
+<RadSideDrawer tkExampleTitle tkToggleNavButton>
+        <StackLayout tkDrawerContent class="sideStackLayout">
+            <StackLayout class="sideTitleStackLayout">
+                <Label text="Navigation Menu"></Label>
+            </StackLayout>
+            <StackLayout class="sideStackLayout">
+                <Label text="Primary" class="sideLabel sideLightGrayLabel"></Label>
+                <Label text="Social" class="sideLabel"></Label>
+                <Label text="Promotions" class="sideLabel"></Label>
+                <Label text="Labels" class="sideLabel sideLightGrayLabel"></Label>
+                <Label text="Important" class="sideLabel"></Label>
+                <Label text="Starred" class="sideLabel"></Label>
+                <Label text="Sent Mail" class="sideLabel"></Label>
+                <Label text="Drafts" class="sideLabel"></Label>
+            </StackLayout>
+            <Label text="Close Drawer" color="lightgray" padding="10" style="horizontal-align: center" (tap)="onCloseDrawerTap()"></Label>
+        </StackLayout>
+        <StackLayout tkMainContent>
+            <Label [text]="mainContentText" textWrap="true" class="drawerContentText"></Label>
+            <Button text="OPEN DRAWER" (tap)="openDrawer()" class="drawerContentButton"></Button>
+        </StackLayout>
+    </RadSideDrawer>
 
 
     
