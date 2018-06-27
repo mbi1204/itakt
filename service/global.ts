@@ -9,5 +9,6 @@ export const GLOBAL = {
 };
 
 export const SESSION = {
+    g_cCveCIA   : 'MFELIZ',
     g_ctEmpleado: null,    
 };
