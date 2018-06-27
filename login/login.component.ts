@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
 
   
 
-    this._router.navigate(["/home"]);
+    this._router.navigate(["/mesas"]);
 
     /*console.log('login()->'  + 'Usuario:' + this.usuario + 'Password' + this.password ); 
     this._Service.PostLogin(this.usuario, this.password).subscribe(

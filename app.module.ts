@@ -12,7 +12,9 @@ import { ItemDetailComponent } from "./item/item-detail.component";
 
 
 import {LoginComponent} from "./login/login.component";
-import {HomeComponent} from "./home/home.component";
+import {MesaComponent } from "./mesas/mesas.component";
+import {HomeComponent}  from "./home/home.component";
+
 
 // Uncomment and add to NgModule imports if you need to use two-way binding
 // import { NativeScriptFormsModule } from "nativescript-angular/forms";
@@ -33,6 +35,7 @@ import {HomeComponent} from "./home/home.component";
     declarations: [
         AppComponent,
         LoginComponent,
+        MesaComponent,
         HomeComponent,
 
         
