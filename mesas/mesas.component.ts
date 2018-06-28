@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
-import {ctMesaService} from '../service/ctMesa.service'; 
+import {ctMesaService} from '../service/mesas.service'; 
+import {ctMesas} from '../model/ctMesas';
 
 @Component({
     selector: "ns-listaMesas",
@@ -7,7 +8,10 @@ import {ctMesaService} from '../service/ctMesa.service';
     templateUrl: "./mesas.component.html",
     providers: [ctMesaService]
 })
-export class MesaComponent implements OnInit {
+export class MesasComponent implements OnInit {
+
+    public _ctMesasObj:ctMesas;
+    public _ctMesasArray:Array<ctMesas> = [];
    
     constructor( private _Service: ctMesaService) { }
     
@@ -38,18 +42,44 @@ export class MesaComponent implements OnInit {
        
         
 
-        lista.forEach(registro=>{ 
-         console.log(registro.iMesa  + " " + registro.cMesa);
-         
+        lista.forEach(item=>{ 
+            this._ctMesasObj = new ctMesas(
+                item.cCveCia,
+                item.iSucursal,
+                item.iMesa,
+                item.cMesa,
+                item.cObs,
+                item.lActiva,
+                item.deColumn,
+                item.deRow,
+                item.deWidth,
+                item.deHeight,
+                item.deX,
+                item.deY,
+                item.iArea,
+                item.iComensales,
+                item.cUsuario,
+                item.dtCreado,
+                item.dtModificado,
+            ); 
+            this._ctMesasArray.push(this._ctMesasObj
+            );
         }); 
+        //console.log("array" + this._ctMesasArray);
 
+        console.log("arraantes del for");
+
+        this._ctMesasArray.forEach(element => {
+            console.log(element.cMesa);
+            
+        });
        }
        
-      
+      console.log("fin");
           
          }, (error) => {
             console.log("result");
-            console.log(error);
+            console.log(this._ctMesasArray);
             
          });
      
