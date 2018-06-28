@@ -12,8 +12,3 @@ refer to http://docs.nativescript.org/ui/theme.
 @import '~nativescript-theme-core/css/core.light.css';
 
 
-.marca{
-    font-family: sans-serif;
-    font-size: 25;
-    color:orange;
-}

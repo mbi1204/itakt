@@ -78,8 +78,9 @@ export class LoginComponent implements OnInit {
             console.log(mensaje);
           });
         } else {        
-           SESSION.g_ctEmpleado = this._ctEmpleado;        
-           this._router.navigate(["/home"]);
+           SESSION.g_ctEmpleado = this._ctEmpleado; 
+           //Debe quedar direccionado a mesas       
+           this._router.navigate(["/mesas"]);
         } 
       }        
                

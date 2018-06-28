@@ -3,28 +3,20 @@ import { NativeScriptModule } from "nativescript-angular/nativescript.module";
 import { AppRoutingModule } from "./app.routing";
 import { NativeScriptFormsModule } from "nativescript-angular/forms";
 import { NativeScriptHttpClientModule } from "nativescript-angular/http-client";
+import * as platform from  'platform';
 import { AppComponent } from "./app.component";
-
-
 import { ItemService } from "./item/item.service";
 import { ItemsComponent } from "./item/items.component";
 import { ItemDetailComponent } from "./item/item-detail.component";
+import { from } from "rxjs/internal/observable/from";
+import { LoginComponent} from "./login/login.component";
+import { MesaComponent } from "./mesas/mesas.component";
+import { HomeComponent } from "./home/home.component";
 
-
-import {LoginComponent} from "./login/login.component";
-import {MesaComponent } from "./mesas/mesas.component";
-import {HomeComponent}  from "./home/home.component";
-
-
-// Uncomment and add to NgModule imports if you need to use two-way binding
-// import { NativeScriptFormsModule } from "nativescript-angular/forms";
-
-// Uncomment and add to NgModule imports  if you need to use the HTTP wrapper
-// import { NativeScriptHttpModule } from "nativescript-angular/http";
 
 @NgModule({
     bootstrap: [
-        AppComponent
+        AppComponent  
     ],
     imports: [
         NativeScriptModule,
@@ -33,18 +25,17 @@ import {HomeComponent}  from "./home/home.component";
         NativeScriptHttpClientModule,
     ],
     declarations: [
-        AppComponent,
-        LoginComponent,
-        MesaComponent,
-        HomeComponent,
-
-        
+        AppComponent,         
         ItemsComponent,
         ItemDetailComponent,
+        LoginComponent,
+        HomeComponent,
+        MesaComponent,   
         
     ],
     providers: [
-        ItemService
+        ItemService,
+        { provide: 'platform', useValue: platform }
     ],
     schemas: [
         NO_ERRORS_SCHEMA

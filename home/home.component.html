@@ -1,64 +1,79 @@
-<ActionBar title="Itakt" class="marca">
+<ActionBar class="marca">
+        <label text="Itakt" class="marca" android.horizontalAlignment="center"></label>
+       
+        <ActionItem  *ngIf= "isAndrod" text= "Agregar Producto"  class="agregar"  android.position = "popup">
+        </ActionItem>
+        <ActionItem  text= "Producto Libre"    class= "Libre"   android.position = "popup">
+        </ActionItem>
+        <ActionItem  text= "Repetir Producto"  class="Repetir"  android.position = "popup">
+        </ActionItem>
+        <ActionItem  text= "Cancelar Producto" class="Cancelar" android.position = "popup">
+        </ActionItem>
+        <ActionItem  text= "Ordenar "          class="Ordenar"  android.position = "popup">
+        </ActionItem>
+       
+       
+
+
+</ActionBar>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--ActionBar title="Itakt" class="marca">
         <NavigationButton icon="~/images/menu.png"  tap="showSideDrawer" ></NavigationButton>
 </ActionBar>
 
 <ScrollView>
-   
+
+
 <StackLayout orientation="vertical">
+ <TabView height="300px">
+    <StackLayout *tabItem="{title: 'Ordenes'}">
+           
+             
+    </StackLayout>
 
- <DockLayout>
-        <Image src="~/images/table.png" class="mesa"         row="0" col="0"></Image>
-        <TextView  hint="Mesas" class="textMesa"             row="0" col="1" horizontalAlignment="left" ></TextView>  
-        <Image src="~/images/orden.png"     class="mesa"     row="0" col="2" horizontalAlignment="center"></Image>
-        <TextView  hint="Orden" class="textMesa"             row="0" col="3" horizontalAlignment="left" ></TextView>          
- </DockLayout>
+    <StackLayout orientation="vertical" *tabItem="{title: 'Pedidos'}">
+            <DockLayout>
+                    <Image src="~/images/table.png" class="mesa"         row="0" col="0"></Image>
+                    <TextView  hint="Mesas" class="textMesa"             row="0" col="1" horizontalAlignment="left" ></TextView> 
+                    <Image src="~/images/calendar.png"class="calendar"    row="1" col="2" ></Image>
+                    <TextView  hint="Fecha" class="textComensal"          row="1" col="3" horizontalAlignment="left"></TextView> 
+                    
+             </DockLayout>
+            
+             <DockLayout>
+                    <Image src="~/images/orden.png"     class="mesa"     row="0" col="2" horizontalAlignment="center"></Image>
+                    <TextView  hint="Orden" class="textMesa"             row="0" col="3" horizontalAlignment="left" ></TextView>          
+                    <Image src="~/images/Comensal.png" class="calendar"   row="1" col="0"></Image>
+                    <TextView  hint="Comensales" class="textComensal"     row="1" col="1" horizontalAlignment="left" margin= "3"></TextView>
+                    
+             </DockLayout> 
+            
+            
+                <DockLayout>
+                        <Image src="~/images/Mesero.png"   class="mesero" row="2" col="0"></Image>
+                        <TextView  hint="Mesero" class="textMesero"       row="2" col="1" horizontalAlignment="left"></TextView>
+                        <Image src="~/images/user.png"   class="mesero"   row="2" col="2"></Image>
+                        <TextView  hint="Usuario" class="textComensal"  [(ngModel)]='usuario'   row="2" col="3" horizontalAlignment="left"></TextView>
+                 </DockLayout>      
+        
+    </StackLayout>
+    <StackLayout *tabItem="{title: 'Opciones'}">
 
- <DockLayout>
-        <Image src="~/images/Comensal.png" class="calendar"   row="1" col="0"></Image>
-        <TextView  hint="Comensales" class="textComensal"     row="1" col="1" horizontalAlignment="left" margin= "3"></TextView>
-        <Image src="~/images/calendar.png"class="calendar"    row="1" col="2" ></Image>
-        <TextView  hint="Fecha" class="textComensal"          row="1" col="3" horizontalAlignment="left"></TextView>
- </DockLayout> 
- 
- <DockLayout>
-        <Image src="~/images/Mesero.png"   class="mesero" row="2" col="0"></Image>
-        <TextView  hint="Mesero" class="textMesero"       row="2" col="1" horizontalAlignment="left"></TextView>
-        <Image src="~/images/user.png"   class="mesero"   row="2" col="2"></Image>
-        <TextView  hint="Usuario" class="textComensal"  [(ngModel)]='usuario'   row="2" col="3" horizontalAlignment="left"></TextView>
- </DockLayout>
-  
-<AbsoluteLayout width="210" height="210" backgroundColor="lightgray">
-        <Label text="10, 10" left="10" top="10" width="90" height="90" backgroundColor="red"></Label>
-        <Label text="110, 10" left="110" top="10" width="90" height="90" backgroundColor="green"></Label>
-        <Label text="110, 110" left="110" top="110" width="90" height="90" backgroundColor="blue"></Label>
-        <Label text="10, 110" left="10" top="110" width="90" height="90" backgroundColor="yellow"></Label>
-</AbsoluteLayout>
-
-<RadSideDrawer tkExampleTitle tkToggleNavButton>
-        <StackLayout tkDrawerContent class="sideStackLayout">
-            <StackLayout class="sideTitleStackLayout">
-                <Label text="Navigation Menu"></Label>
-            </StackLayout>
-            <StackLayout class="sideStackLayout">
-                <Label text="Primary" class="sideLabel sideLightGrayLabel"></Label>
-                <Label text="Social" class="sideLabel"></Label>
-                <Label text="Promotions" class="sideLabel"></Label>
-                <Label text="Labels" class="sideLabel sideLightGrayLabel"></Label>
-                <Label text="Important" class="sideLabel"></Label>
-                <Label text="Starred" class="sideLabel"></Label>
-                <Label text="Sent Mail" class="sideLabel"></Label>
-                <Label text="Drafts" class="sideLabel"></Label>
-            </StackLayout>
-            <Label text="Close Drawer" color="lightgray" padding="10" style="horizontal-align: center" (tap)="onCloseDrawerTap()"></Label>
-        </StackLayout>
-        <StackLayout tkMainContent>
-            <Label [text]="mainContentText" textWrap="true" class="drawerContentText"></Label>
-            <Button text="OPEN DRAWER" (tap)="openDrawer()" class="drawerContentButton"></Button>
-        </StackLayout>
-    </RadSideDrawer>
-
-
+    </StackLayout>
+</TabView>
     
 </StackLayout>
->
+</ScrollView-->
 
