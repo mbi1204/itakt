@@ -25,13 +25,18 @@
                </DockLayout>
             
                 <DockLayout>
-                    <Image src="~/images/orden.png"     class="mesa"     ></Image>
-                    <TextView  hint="Orden" class="textOrden"            ></TextView>  
-                    <Label text="Ordenes" dock="top" height="60" backgroundColor="white"></Label>      
+                    <Image src="~/images/orden.png"     class="mesa"       row="0" col="0"   ></Image>
+                    <TextView  hint="Orden"             class="textOrden"  row="0" col="1"         ></TextView>
+                    <TextView  hint="Ordenes"           class="Ordenes  "  row="0" col="2"    backgroundColor="#F2F2F2"      ></TextView>   
+                   
                    
                 </DockLayout> 
              
-                <GridLayout rows= "auto, auto" columns= "auto, *, auto" width="720" height="720" backgroundColor="lightgray">                      
+                <GridLayout rows= "auto, auto" columns= "auto, *, auto" width= "750" height = "700"  backgroundColor="lightgray">                      
+                                <Label text="Comenzal" row="0" col="0" backgroundColor="red"></Label>
+                                <Label text="Producto" row="0" col="1" backgroundColor="green"></Label>                  
+                                <Label text="Precio"   row="0" col="3" backgroundColor="yellow"></Label> 
+                                <Label text="Cantidad" row="0" col="4" backgroundColor="gray"> </Label>                                   
                 </GridLayout>
             
             

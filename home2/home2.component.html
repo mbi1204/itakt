@@ -35,18 +35,22 @@
                                 
                                     <DockLayout>
                                         <Image src="~/images/orden.png"     class="mesa"     row="0" col="2" horizontalAlignment="center"></Image>
-                                        <TextView  hint="Orden" class="textOrden"             row="0" col="3" horizontalAlignment="left" ></TextView>          
+                                        <TextView  hint="Orden" class="textOrden"            row="0" col="3" horizontalAlignment="left" ></TextView>          
                                         
                                     </DockLayout> 
                                  
-                                    <GridLayout rows= "auto, auto" columns= "auto, *, auto" width="720" height="620" backgroundColor="lightgray">                      
+                                    <GridLayout rows= "auto, auto" columns= "auto, *, auto" width="720" height="620" backgroundColor="lightgray"> 
+                                                <Label text="Comenzal" row="0" col="0" backgroundColor="red"></Label>
+                                                <Label text="Producto" row="0" col="1" backgroundColor="green"></Label>                  
+                                                <Label text="Precio"   row="0" col="3" backgroundColor="yellow"></Label> 
+                                                <Label text="Cantidad" row="0" col="4" backgroundColor="gray"> </Label>                                            
                                     </GridLayout>
                                 
                                 
                                     <DockLayout>
                                             <Image src="~/images/calendar.png"class="calendar"    row="1" col="2" ></Image>
-                                            <TextView  hint="Fecha" class="textMesero"          row="1" col="3" horizontalAlignment="left"></TextView> 
-                                            <Image src="~/images/user.png"   class="mesero"   row="2" col="2"></Image>
+                                            <TextView  hint="Fecha" class="textMesero"            row="1" col="3" horizontalAlignment="left"></TextView> 
+                                            <Image src="~/images/user.png"   class="mesero"       row="2" col="2"></Image>
                                             <TextView  hint="Usuario" class="textMesero"  [(ngModel)]='usuario'   row="2" col="3" horizontalAlignment="left"></TextView>
                                     </DockLayout>      
                             
