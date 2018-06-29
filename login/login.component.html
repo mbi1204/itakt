@@ -4,8 +4,13 @@
 
 <ScrollView>
     <StackLayout>
-        <label text="Impulsado por Sinergitec" class="empresa"></label>
-        <Image src="~/images/gris1.png" class="logo"></Image>
+            <DockLayout>
+                    <Image src="~/images/LogSlogan.png"  class="logo"   dock="left" ></Image>
+                    <Image src="~/images/imp.png"        class="imp"   ></Image>                                                 
+                    <Image src="~/images/sinergitec.png" class="siner"  dock="right"></Image>                                    
+            </DockLayout>
+
+          
         <label></label>
         <label></label>
         <label></label>
@@ -17,7 +22,7 @@
         <!--Button text="Iniciar Sesión" class="button" (tap)= "login()" ></Button-->
         <label></label>
         <label></label>
-        <label text="Sinergitec.com" class="compania"></label>
+        <label text="Sinergitec.com" class="compania" ></label>
     </StackLayout>
 
 </ScrollView>

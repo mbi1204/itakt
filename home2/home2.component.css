@@ -1,59 +1,52 @@
-.menu{
-    width: 5%;
-    height: 5%;
-}
 .mesa{
     width: 8%;
     height: 8%;   
 }
 .textMesa{
-    width: 37%;
-    color: gray;   
+    width: 15%;  
 }
 .comensal{
     width: 8%;
     height: 8%;
 }
 .textComensal{
-    width: 37%;
-    color: gray;    
+    width: 15%;   
 }
 .mesero{
     width: 8%;
     height: 8%;
 }
 .textMesero{
-    width: 37%;
-    color: gray;    
+    width: 40%;   
 }
 .calendar{
     width: 8%;
     height: 8%;
 }
-.agregar{
 
-    background: rgba(39, 132, 246, 0.3);
+.textOrden{
+    width: 8%;  
 }
-.icon{
-    text-align: right;
+.textOrden{
+    width: 15%;  
 }
+
 .Btn1{
         margin-top: 20;
         width: 20%;
         height: 150px;
         background-color:green;
-        text-align: center;
+        text-align: left;
         color: white;
     }
-
 
 .Btn2{
 
     margin-top: 20;
-    width: 50%;
+    width: 20%;
     height: 150px;
     background-color: red;
-    text-align: center;
+    text-align: left;
     color: white;
 
 }

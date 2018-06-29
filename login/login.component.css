@@ -7,6 +7,12 @@
     color: white;
 }
 
+StackLayout {
+    width: 600;
+    padding: 2 2;
+    background: rgba(202, 200, 199, 0.2);
+}
+
 .logo{
     width: 20%;
     height: 20%;
@@ -14,6 +20,12 @@
     margin-left: 20;
     margin-right: 20;
     margin-bottom: 20; 
+}
+.imp{
+    width: 35%;
+    height: 20%;
+    vertical-align: center;
+
 }
 .textView{
     width: 80%;
@@ -26,9 +38,9 @@
 }
 
 .empresa{
-    margin-top: 10;
+    
     font-family: sans-serif;
-    font-size: 20;
+    font-size: 35;
     text-align: center;
 }
 .compania{
@@ -36,6 +48,16 @@
     font-family: sans-serif;
     font-size: 20;
     text-align: center;
+    color: #0d55f8;
+}
+.siner{
+    width: 30%;
+    height: 30%;
+    margin-top: 20;
+    margin-left: 50;
+    margin-right: 20;
+    margin-bottom: 20;
+
 }
 
 

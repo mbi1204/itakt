@@ -1,39 +1,29 @@
-.menu{
-    width: 5%;
-    height: 5%;
-}
 .mesa{
     width: 8%;
     height: 8%;   
 }
 .textMesa{
-    width: 37%;
-    color: gray;   
+    width: 15%;  
 }
 .comensal{
     width: 8%;
     height: 8%;
 }
 .textComensal{
-    width: 37%;
-    color: gray;    
+    width: 15%;   
 }
 .mesero{
     width: 8%;
     height: 8%;
 }
 .textMesero{
-    width: 37%;
-    color: gray;    
+    width: 40%;   
 }
 .calendar{
     width: 8%;
     height: 8%;
 }
-.agregar{
 
-    background: rgba(39, 132, 246, 0.3);
-}
-.icon{
-    text-align: right;
+.textOrden{
+    width: 15%;  
 }
