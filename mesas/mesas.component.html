@@ -1,4 +1,8 @@
-<!--<Button text="Aceptar" class="button"  [nsRouterLink] ="['/home']" ></Button>-->
+<ActionBar class="marca">
+        <label text="Itakt" class="marca" android.horizontalAlignment="center"></label>
+</ActionBar>
+
+<Button text="Aceptar" class="button"  [nsRouterLink] ="['/home']" ></Button>
 
 <ListView [items]="_ctMesasArray" (itemTap)="onItemTap($event)" class="list-group">
     <ng-template let-country="item" let-i="index" let-odd="odd" let-even="even">

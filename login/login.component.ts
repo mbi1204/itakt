@@ -14,18 +14,18 @@ import * as dialogs from "ui/dialogs";
   providers: [LoginService]
 })
 export class LoginComponent implements OnInit {
-  public usuario: string;
+/*  public usuario: string;
   public password: string;
-  public _ctEmpleado :ctEmpleado;
+  public _ctEmpleado :ctEmpleado;*/
   
-  constructor(private _Service: LoginService, 
+  constructor(/*private _Service: LoginService, 
               private _route:ActivatedRoute,
-              private _router:Router) {}
+  private _router:Router*/) {}
 
   ngOnInit(): void {
     console.log("login.component.ts");
   }
-
+/*
   login(): void {
       var resultado, error, mensaje,tt_ctEmpleado;
 
@@ -98,5 +98,7 @@ export class LoginComponent implements OnInit {
         );
       }
     );
-  }
+  }*/
 }
+
+

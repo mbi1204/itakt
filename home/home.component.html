@@ -1,64 +1,40 @@
 <ActionBar class="marca">
-        <label text="Itakt" class="marca" android.horizontalAlignment="center"></label>
-       
-        <ActionItem  *ngIf= "isAndrod" text= "Agregar Producto"  class="agregar"  android.position = "popup">
-        </ActionItem>
-        <ActionItem  text= "Producto Libre"    class= "Libre"   android.position = "popup">
-        </ActionItem>
-        <ActionItem  text= "Repetir Producto"  class="Repetir"  android.position = "popup">
-        </ActionItem>
-        <ActionItem  text= "Cancelar Producto" class="Cancelar" android.position = "popup">
-        </ActionItem>
-        <ActionItem  text= "Ordenar "          class="Ordenar"  android.position = "popup">
-        </ActionItem>
-       
-       
+               
+        
+                <label text="Itakt" class= "marca" android.horizontalAlignment="center"></label>
 
+        <!--Lista-->       
+                <ActionItem  text= "Agregar Producto"  class= "agregar" android.systemIcon ="ic_menu" android.position = "popup">
+                </ActionItem>
+                <ActionItem  text= "Producto Libre"    class= "Libre"   android.position = "popup">
+                </ActionItem>
+                <ActionItem  text= "Repetir Producto"  class="Repetir"  android.position = "popup">
+                </ActionItem>
+                <ActionItem  text= "Cancelar Producto" class="Cancelar" android.position = "popup">
+                </ActionItem>
+                <ActionItem  text= "Ordenar "          class="Ordenar"  android.position = "popup">
+                </ActionItem>
 
+                
 </ActionBar>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!--ActionBar title="Itakt" class="marca">
-        <NavigationButton icon="~/images/menu.png"  tap="showSideDrawer" ></NavigationButton>
-</ActionBar>
-
 <ScrollView>
-
-
-<StackLayout orientation="vertical">
- <TabView height="300px">
-    <StackLayout *tabItem="{title: 'Ordenes'}">
-           
-             
-    </StackLayout>
-
-    <StackLayout orientation="vertical" *tabItem="{title: 'Pedidos'}">
-            <DockLayout>
-                    <Image src="~/images/table.png" class="mesa"         row="0" col="0"></Image>
+        <StackLayout orientation="vertical">
+                <DockLayout>
+                    <Image src="~/images/table.png" class="mesa"   [nsRouterLink] ="['/home2']"       row="0" col="0"></Image>
                     <TextView  hint="Mesas" class="textMesa"             row="0" col="1" horizontalAlignment="left" ></TextView> 
                     <Image src="~/images/calendar.png"class="calendar"    row="1" col="2" ></Image>
                     <TextView  hint="Fecha" class="textComensal"          row="1" col="3" horizontalAlignment="left"></TextView> 
-                    
-             </DockLayout>
+               </DockLayout>
             
-             <DockLayout>
+                <DockLayout>
                     <Image src="~/images/orden.png"     class="mesa"     row="0" col="2" horizontalAlignment="center"></Image>
                     <TextView  hint="Orden" class="textMesa"             row="0" col="3" horizontalAlignment="left" ></TextView>          
                     <Image src="~/images/Comensal.png" class="calendar"   row="1" col="0"></Image>
                     <TextView  hint="Comensales" class="textComensal"     row="1" col="1" horizontalAlignment="left" margin= "3"></TextView>
-                    
-             </DockLayout> 
+                </DockLayout> 
+             
+                <GridLayout rows= "auto, auto" columns= "auto, *, auto" width="700" height="720" backgroundColor="lightgray">                      
+                </GridLayout>
             
             
                 <DockLayout>
@@ -66,14 +42,9 @@
                         <TextView  hint="Mesero" class="textMesero"       row="2" col="1" horizontalAlignment="left"></TextView>
                         <Image src="~/images/user.png"   class="mesero"   row="2" col="2"></Image>
                         <TextView  hint="Usuario" class="textComensal"  [(ngModel)]='usuario'   row="2" col="3" horizontalAlignment="left"></TextView>
-                 </DockLayout>      
+                </DockLayout>      
         
-    </StackLayout>
-    <StackLayout *tabItem="{title: 'Opciones'}">
-
-    </StackLayout>
-</TabView>
-    
+   
 </StackLayout>
-</ScrollView-->
+</ScrollView>
 

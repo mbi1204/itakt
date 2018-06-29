@@ -1,4 +1,5 @@
-<ActionBar title="Itakt" class="marca">
+<ActionBar class="marca">
+        <label text="Itakt" class="marca" android.horizontalAlignment="center"></label>
 </ActionBar>
 
 <ScrollView>
@@ -12,7 +13,8 @@
         <TextView hint="Usuario" class="textView" [(ngModel)]='usuario'></TextView>
         <TextView hint="Contraseña" class="textView" [(ngModel)]='password'></TextView>
 
-        <Button text="Iniciar Sesión" class="button"  (tap)= "login()" ></Button>
+        <Button text="Iniciar Sesión" class="button" [nsRouterLink] ="['/home']" ></Button>
+        <!--Button text="Iniciar Sesión" class="button" (tap)= "login()" ></Button-->
         <label></label>
         <label></label>
         <label text="Sinergitec.com" class="compania"></label>

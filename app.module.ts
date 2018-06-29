@@ -10,24 +10,12 @@ import { ItemsComponent } from "./item/items.component";
 import { ItemDetailComponent } from "./item/item-detail.component";
 import { from } from "rxjs/internal/observable/from";
 import { LoginComponent} from "./login/login.component";
-import { MesaComponent } from "./mesas/mesas.component";
+import { MesasComponent } from "./mesas/mesas.component";
 import { HomeComponent } from "./home/home.component";
 
-
-<<<<<<< Updated upstream
-=======
-import {LoginComponent} from "./login/login.component";
-import {MesasComponent } from "./mesas/mesas.component";
-import {HomeComponent}  from "./home/home.component";
+import { HomeComponent2 } from "./home2/home2.component";
 
 
-// Uncomment and add to NgModule imports if you need to use two-way binding
-// import { NativeScriptFormsModule } from "nativescript-angular/forms";
-
-// Uncomment and add to NgModule imports  if you need to use the HTTP wrapper
-// import { NativeScriptHttpModule } from "nativescript-angular/http";
-
->>>>>>> Stashed changes
 @NgModule({
     bootstrap: [
         AppComponent  
@@ -39,26 +27,19 @@ import {HomeComponent}  from "./home/home.component";
         NativeScriptHttpClientModule,
     ],
     declarations: [
-<<<<<<< Updated upstream
         AppComponent,         
-=======
-        AppComponent,
-        LoginComponent,
-        MesasComponent,
-        HomeComponent,
-
-        
->>>>>>> Stashed changes
         ItemsComponent,
         ItemDetailComponent,
         LoginComponent,
         HomeComponent,
-        MesaComponent,   
+        MesasComponent,
+        HomeComponent2,
+           
         
     ],
     providers: [
         ItemService,
-        { provide: 'platform', useValue: platform }
+        { provide: 'platform', useValue: platform },
     ],
     schemas: [
         NO_ERRORS_SCHEMA

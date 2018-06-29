@@ -5,12 +5,12 @@ import { inject } from "@angular/core/src/di/injector";
 import { platformBrowser } from "@angular/platform-browser/src/browser";
 
 @Component({
-    selector: "ns-home",
+    selector: "ns-home2",
     moduleId: module.id,
-    templateUrl: "./home.component.html",
-    styleUrls:  ["./home.component.css"]
+    templateUrl: "./home2.component.html",
+    styleUrls:  ["./home2.component.css"]
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent2 implements OnInit {
   
     public usuario :any;
    constructor(
@@ -29,5 +29,4 @@ export class HomeComponent implements OnInit {
 
     
 }
-
 
