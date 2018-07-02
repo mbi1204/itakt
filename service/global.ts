@@ -11,4 +11,7 @@ export const GLOBAL = {
 export const SESSION = {
     g_cCveCIA   : 'MFELIZ',
     g_ctEmpleado: null,    
+    g_iOrden    : null,
+    g_iOrdenDia : null,
+
 };
