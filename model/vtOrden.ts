@@ -3,7 +3,7 @@ autor: IMB
 fecha: 28/06/2018
 obs  : modelo de la tabla  vtVtaSusp Encabezado de la Orden
 */
-export class ctMesas{
+export class vtOrden{
     constructor( 
         public cCveCia :string,
         public iFolioSusp :number,
@@ -25,10 +25,10 @@ export class ctMesas{
         public lFacturar :boolean,
         public iAlmacen :number,
         public dtCreado :string,
-        public dtModificado,
+        public dtModificado: string,
         public cUSuario :string,
         public iFolRef :number,
-        public cObs:string,
+        public cObs:    string,
         public iNivelP :number, 
         public lVtaDirecta :boolean,
         public cEntregarA :string,
@@ -44,6 +44,6 @@ export class ctMesas{
         public cRazonID :string,
         public cUsuAbre :string,
         public cNomAbre :string,
-        public dtTerminal :number,)
+        public dtTerminal :string)
         {}
 }
