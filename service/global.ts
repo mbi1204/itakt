@@ -13,5 +13,6 @@ export const SESSION = {
     g_ctEmpleado: null,    
     g_iOrden    : null,
     g_iOrdenDia : null,
+    g_cMesa     : null,
 
 };
