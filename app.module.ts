@@ -16,6 +16,7 @@ import { HomeComponent } from "./home/home.component";
 import { HomeComponent2 } from "./home2/home2.component";
 
 
+
 @NgModule({
     bootstrap: [
         AppComponent  
@@ -34,6 +35,7 @@ import { HomeComponent2 } from "./home2/home2.component";
         HomeComponent,
         MesasComponent,
         HomeComponent2,
+       
            
         
     ],

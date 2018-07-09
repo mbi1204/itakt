@@ -20,6 +20,7 @@ const routes: Routes = [
     { path: "home2",  component:HomeComponent2}, 
     { path: "items", component: ItemsComponent },
     { path: "item/:id", component: ItemDetailComponent },
+  
 ];
 
 @NgModule({

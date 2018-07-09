@@ -2,13 +2,30 @@
         <label text="Itakt" class="marca" android.horizontalAlignment="center"></label>
 </ActionBar>
 
-<Button text="Aceptar" class="button"  [nsRouterLink] ="['/home']" ></Button>
-
-<ListView [items]="_ctMesasArray" (itemTap)="onItemTap($event)" class="list-group">
-    <ng-template let-country="item" let-i="index" let-odd="odd" let-even="even">
-        <GridLayout class="list-group-item">
-            <Label [text]="country.cMesa"></Label>
+<GridLayout>    
+    <TabView height="800">
+        <StackLayout *tabItem="{title: 'COMEDOR'}">
+            <GridLayout rows="" columns="">
+                <ScrollView>
+                    <AbsoluteLayout ng-repeat="mesas in _ctMesasArray">
+                        <AbsoluteLayout *ngFor="let mesas of _ctMesasArray">
+                            <button height="70" width="110" [text]="mesas.cMesa" [top]="((mesas.deRow * 600) / 30.76)" [left]="(mesas.deColumn * 1000) / 201.80" *ngIf="mesas.iArea == 1 " [nsRouterLink] ="['/home']" (tap)="onButtonTap()"></button>
+                        </AbsoluteLayout>
+                    </AbsoluteLayout>
+                </ScrollView>
+            </GridLayout>
+        </StackLayout>
+        <StackLayout *tabItem="{title: 'PARA LLEVAR'}">
+            <GridLayout rows="" columns="">
+                <ScrollView>
+                    <AbsoluteLayout ng-repeat="mesas in _ctMesasArray">
+                        <AbsoluteLayout *ngFor="let mesas of _ctMesasArray">
+                                <button  height="70" width="110" [text]="mesas.cMesa" [top]="((mesas.deRow * 600) / 30.76)" [left]="(mesas.deColumn * 1000) / 201.80" *ngIf="mesas.iArea == 2 " [nsRouterLink] ="['/home']"></button>
+                        </AbsoluteLayout>
+                    </AbsoluteLayout>
+                </ScrollView>
         </GridLayout>
-    </ng-template>
-</ListView> 
+        </StackLayout>
+    </TabView>
+</GridLayout>  
 
