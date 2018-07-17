@@ -90,7 +90,7 @@ export class LoginComponent implements OnInit {
            //Debe quedar direccionado a mesas       
            //this._router.navigate(["/mesas"]);
            Toast.makeText("Bienvenido").show();           
-           this._router.navigate(["/home"]);
+           this._router.navigate(["/mesas"]);
            
         } 
       }        
