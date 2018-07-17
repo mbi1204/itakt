@@ -4,6 +4,8 @@ import {Router,ActivatedRoute,Params} from '@angular/router';
 import {ctEmpleado} from "../model/ctEmpleado";
 import { SESSION } from '../service/global';
 import * as dialogs from "ui/dialogs";
+import { TNSFancyAlert } from "nativescript-fancyalert";
+import * as Toast from "nativescript-toast";
 
 
 @Component({
@@ -14,36 +16,39 @@ import * as dialogs from "ui/dialogs";
   providers: [LoginService]
 })
 export class LoginComponent implements OnInit {
-/*  public usuario: string;
+  public usuario: string;
   public password: string;
-  public _ctEmpleado :ctEmpleado;*/
+  public _ctEmpleado :ctEmpleado;
   
-  constructor(/*private _Service: LoginService, 
+  constructor(private _Service: LoginService, 
               private _route:ActivatedRoute,
-  private _router:Router*/) {}
+  private _router:Router) {}
 
   ngOnInit(): void {
     console.log("login.component.ts");
   }
-/*
+
   login(): void {
       var resultado, error, mensaje,tt_ctEmpleado;
 
+     
 
     console.log('login()->'  + 'Usuario:' + this.usuario + 'Password' + this.password ); 
     this._Service.PostLogin(this.usuario, this.password).subscribe(
       result => {
         console.log(result);
-
+      
         resultado = result.body;        
         error     = resultado.response.oplError;
         mensaje   = resultado.response.opcMensage;
         
 
         if (error == 'true'){
-          dialogs.alert(mensaje).then(()=> {
+          /*dialogs.alert(mensaje).then(()=> {
             console.log(mensaje);
-          });
+          });*/
+
+          TNSFancyAlert.showError("Error!", "" , mensaje);
 
         }else {
           tt_ctEmpleado = resultado.response.tt_ctEmpleado.tt_ctEmpleado[0];
@@ -74,13 +79,19 @@ export class LoginComponent implements OnInit {
         
       
         if ( this._ctEmpleado == null) {
-          dialogs.alert("error en la carga de la session del empleado").then(()=> {
+          TNSFancyAlert.showError("Error!", ""  , "error en la carga de la session del empleado");
+
+          /*dialogs.alert("error en la carga de la session del empleado").then(()=> {
+
             console.log(mensaje);
-          });
+          });*/
         } else {        
-           SESSION.g_ctEmpleado = this._ctEmpleado; 
+            SESSION.g_ctEmpleado = this._ctEmpleado; 
            //Debe quedar direccionado a mesas       
-           this._router.navigate(["/mesas"]);
+           //this._router.navigate(["/mesas"]);
+           Toast.makeText("Bienvenido").show();           
+           this._router.navigate(["/home"]);
+           
         } 
       }        
                
@@ -98,7 +109,7 @@ export class LoginComponent implements OnInit {
         );
       }
     );
-  }*/
+  }
 }
 
 

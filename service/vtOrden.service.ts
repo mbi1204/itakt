@@ -43,7 +43,7 @@ export class vtOrdenService {
 
           console.log(request);
         
-          return this._http.post(this.url + 'vtOrden',  request , {observe: 'response' ,  headers: headers });
+          return this._http.post(this.url + 'vtOrden/',  request , {observe: 'response' ,  headers: headers });
 
     }
 }

@@ -3,6 +3,8 @@ autor: imendoza@sinergitec.com
 fecha: 25/06/2018
 obs  : modelo de la tabla empleado 
 */
+
+import { ImageSource, fromBase64, fromFile } from "tns-core-modules/image-source";
 export class ctEmpleado{
     constructor(public cCveCia :string,
                 public iEmpleado:number,
@@ -16,7 +18,7 @@ export class ctEmpleado{
                 public cEmail:string,
                 public cApellidoP:string,
                 public cApellidoM:string,
-                public bImagen:any,
+                public bImagen:string,
                 public cFoto:string,
                 public lActivo:boolean,
                 public dtIngreso:Date,
