@@ -10,12 +10,10 @@ import { ItemsComponent } from "./item/items.component";
 import { ItemDetailComponent } from "./item/item-detail.component";
 import { from } from "rxjs/internal/observable/from";
 import { LoginComponent} from "./login/login.component";
-import { MesasComponent } from "./mesas/mesas.component";
+//import { MesasComponent } from "./mesas/mesas.component";
 import { HomeComponent } from "./home/home.component";
-
 import { HomeComponent2 } from "./home2/home2.component";
-
-
+import { NOrdenComponent} from "./orden/nueva.component";
 
 @NgModule({
     bootstrap: [
@@ -33,9 +31,9 @@ import { HomeComponent2 } from "./home2/home2.component";
         ItemDetailComponent,
         LoginComponent,
         HomeComponent,
-        MesasComponent,
+      //  MesasComponent,
         HomeComponent2,
-       
+        NOrdenComponent,
            
         
     ],

@@ -1,0 +1,26 @@
+<StackLayout sdkExampleTitle sdkToggleNavButton>
+    <StackLayout>
+        <!-- >> slider-values-xml -->
+        <GridLayout class="m-15" rows="auto" columns="50 * 50">
+
+            <Label class="h3" text="1" textWrap="true" row="10" col="0"></Label>
+            <Slider minValue="1" maxValue="20" [(ngModel)]="iComensales" row="0" col="1"></Slider>
+            <Label class="h3" text="20" textWrap="true" row="0" col="2"></Label>
+
+
+        </GridLayout>
+
+
+        <GridLayout class="m-15" rows="auto" columns="50 * 50">
+
+            <TextField [(ngModel)]='iComensales' width="10%" textWrap="true" row="0" col="1" editable="false" class="h1"></TextField>
+
+        </GridLayout>
+
+        <Button class="btn btn-primary btn-active" width="90%" text="Crear Orden" (tap)="creaOrden()" row="70" col="0"></Button>
+
+
+
+
+        <!-- << slider-values-xml -->
+    </StackLayout>
