@@ -16,6 +16,7 @@
 <ScrollView>
     <StackLayout orientation="vertical">
         <DockLayout>
+            <Image src="~/images/table.png" class="mesa" [nsRouterLink]="['/home2']" row="0" col="0"></Image>
             <TextView hint="Mesas" class="textMesa" row="0" col="1" horizontalAlignment="left"></TextView>
             <Image src="~/images/Comensal.png" class="calendar" row="1" col="0"></Image>
             <TextView hint="Comensales" class="textComensal" row="1" col="1" horizontalAlignment="left" margin="3" [(ngModel)]='_iComensal'></TextView>
