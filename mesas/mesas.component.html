@@ -1,49 +1,44 @@
-<ActionBar class="marca" icon="res://icon"  android.iconVisibility = "always">
+<ActionBar class="marca" icon="res://icon" android.iconVisibility="always">
 
-    <label text="Itakt" class= "marca" android.horizontalAlignment="center"></label>
+    <label text="Itakt" class="marca" android.horizontalAlignment="center"></label>
 
-    <ActionItem  text= "Cancelar"   [nsRouterLink] ="['/home']"  android.position = "popup"></ActionItem>
-    <ActionItem  text= "Actualizar" [nsRouterLink] ="['/login']"  android.position = "popup"></ActionItem>            
+    <ActionItem text="Cancelar" [nsRouterLink]="['/home']" android.position="popup"></ActionItem>
+    <ActionItem text="Actualizar" [nsRouterLink]="['/login']" android.position="popup"></ActionItem>
 </ActionBar>
 
 
 
-<GridLayout>    
-    <TabView height="800" >
-        <StackLayout *tabItem="{title: 'COMEDOR'}"> 
-            <GridLayout rows="" columns="" >
+<GridLayout>
+    <TabView height="800">
+        <StackLayout *tabItem="{title: 'COMEDOR'}">
+            <GridLayout rows="" columns="">
                 <ScrollView>
                     <AbsoluteLayout ng-repeat="mesas in _ctMesasArray">
                         <AbsoluteLayout *ngFor="let mesas of _ctMesasArray">
-                            <AbsoluteLayout *ngFor="let mesasH of _ctMesasHArray"  >
-                                <button height="70" width="90" [text]="mesas.cMesa" [top]="((mesas.deRow * 600) / 30.76)" [left]="(mesas.deColumn * 820) / 201.80" 
-                                        *ngIf="mesas.iArea == 1" [nsRouterLink] ="['/home']" (tap)="regresaMesa(mesas.cMesa)" 
-                                         [ngStyle]="pintaBoton(mesas.iMesa)" >
-                                </button>     
-                                
-                            </AbsoluteLayout>
+                            <!-- <AbsoluteLayout *ngFor="let mesasH of _ctMesasHArray"  >-->
+                            <button height="70" width="90" [text]="mesas.cMesa" [top]="((mesas.deRow * 600) / 30.76)" [left]="(mesas.deColumn * 820) / 201.80" *ngIf="mesas.iArea == 1" [nsRouterLink]="['/home']" (tap)="regresaMesa(mesas.cMesa)" [ngStyle]="pintaBoton(mesas.iMesa)">
+                                </button>
+
+                            <!--</AbsoluteLayout>-->
                         </AbsoluteLayout>
                     </AbsoluteLayout>
-                                        
+
                 </ScrollView>
             </GridLayout>
         </StackLayout>
         <StackLayout *tabItem="{title: 'PARA LLEVAR'}">
-                <GridLayout rows="" columns="" >
-                    <ScrollView>
-                        <AbsoluteLayout ng-repeat="mesas in _ctMesasArray">
-                            <AbsoluteLayout *ngFor="let mesas of _ctMesasArray">
-                                <AbsoluteLayout *ngFor="let mesasH of _ctMesasHArray"  >
-                                    <button height="70" width="90" [text]="mesas.cMesa " [top]="((mesas.deRow * 600) / 30.76)" [left]="(mesas.deColumn * 730) / 201.80" 
-                                        *ngIf="mesas.iArea == 2" [nsRouterLink] ="['/home']" (tap)="regresaMesa(mesas.cMesa)" 
-                                        [ngStyle]="pintaBoton(mesas.iMesa)">
-                                    </button>      
-                                </AbsoluteLayout>
-                            </AbsoluteLayout>
+            <GridLayout rows="" columns="">
+                <ScrollView>
+                    <AbsoluteLayout ng-repeat="mesas in _ctMesasArray">
+                        <AbsoluteLayout *ngFor="let mesas of _ctMesasArray">
+                            <!-- <AbsoluteLayout *ngFor="let mesasH of _ctMesasHArray">-->
+                            <button height="70" width="90" [text]="mesas.cMesa " [top]="((mesas.deRow * 600) / 30.76)" [left]="(mesas.deColumn * 730) / 201.80" *ngIf="mesas.iArea == 2" [nsRouterLink]="['/home']" (tap)="regresaMesa(mesas.cMesa)" [ngStyle]="pintaBoton(mesas.iMesa)">
+                            </button>
+                            <!--</AbsoluteLayout>-->
                         </AbsoluteLayout>
-                    </ScrollView>
-                </GridLayout>            
+                    </AbsoluteLayout>
+                </ScrollView>
+            </GridLayout>
         </StackLayout>
     </TabView>
-</GridLayout>  
-
+</GridLayout>
