@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import {ctMesaService} from '../service/mesas.service'; 
 import {ctMesas} from '../model/ctMesas';
 
-import {SESSION  } from '../service/global';
+import {SESSION ,FECHA } from '../service/global';
 import {ctMesaHService} from '../service/mesasHist.service'; 
 import {vtMesaHist} from '../model/vtMesaHist';
 import { Background } from "tns-core-modules/ui/styling/background";
@@ -22,7 +22,7 @@ export class MesasComponent implements OnInit {
     public _ctMesasHObj:vtMesaHist;
     public _ctMesasHArray:Array<vtMesaHist> = [];
     public _cFecha     :string;
-    
+   
 
     constructor( private _Service: ctMesaService, private _ServiceH: ctMesaHService) {}    
 
@@ -34,7 +34,7 @@ export class MesasComponent implements OnInit {
         var Error: any;
         var Mensaje: any;
                
-        
+        this._cFecha    =  FECHA.g_hoy;
 
         this._Service.getctMesas("mfeliz", "true").subscribe((result) => { 
             respuesta = result.body;
@@ -118,27 +118,29 @@ export class MesasComponent implements OnInit {
         
           
     }
-    regresaMesa(mesa:string): void {
-        SESSION.g_cMesa=mesa;
+    regresaMesa(cMesa:string, iMesa): void {
+        SESSION.g_cMesa=cMesa;
+        SESSION.g_iMesa=iMesa;
         console.log("valor en session: --> " + SESSION.g_cMesa);
     }
 
-    
-    
     pintaBoton(imesa){
-        {
+        
+        
             var viMesa: any;
+
             viMesa  = this._ctMesasHArray.find(cMesa=>cMesa.iMesa == imesa);
             
-            
-            
+
             switch (viMesa.iEstatusMesa) {                
                 case 1:{
+
                     let myStyles = {
                         'background-color': 'red',      
-                                       
-                    };
+                        
+                    }; 
                 return myStyles;
+                
                 }
                 case 2:{
                     let myStyles = {
@@ -150,18 +152,12 @@ export class MesasComponent implements OnInit {
                 case 3: {
                     let myStyles = {
                         'background-color': 'greenyellow', 
-                        regresaTiempo() {
-                
-                        }
-
-                    };
+                        
+                    }; 
                 return myStyles;
                 } 
-            } 
+            }
+            
+             
         }   
-        
-    }
-
-    
-    
 }
