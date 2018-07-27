@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import {ctMesaService} from '../service/mesas.service'; 
 import {ctMesas} from '../model/ctMesas';
+import 'nativescript-localstorage';
 
 import {SESSION ,FECHA } from '../service/global';
 import {ctMesaHService} from '../service/mesasHist.service'; 
@@ -21,7 +22,8 @@ export class MesasComponent implements OnInit {
     public _ctMesasArray:Array<ctMesas> = [];
     public _ctMesasHObj:vtMesaHist;
     public _ctMesasHArray:Array<vtMesaHist> = [];
-    public _cFecha     :string;
+    public _cTiempo    :any;
+    
    
 
     constructor( private _Service: ctMesaService, private _ServiceH: ctMesaHService) {}    
@@ -34,7 +36,7 @@ export class MesasComponent implements OnInit {
         var Error: any;
         var Mensaje: any;
                
-        this._cFecha    =  FECHA.g_hoy;
+        
 
         this._Service.getctMesas("mfeliz", "true").subscribe((result) => { 
             respuesta = result.body;
@@ -106,8 +108,6 @@ export class MesasComponent implements OnInit {
             this._ctMesasHArray.push(this._ctMesasHObj);
             
         }); 
-        
-        
         }
         
         }, (error) => {
@@ -116,48 +116,72 @@ export class MesasComponent implements OnInit {
             
         });
         
+        
           
     }
-    regresaMesa(cMesa:string, iMesa): void {
-        SESSION.g_cMesa=cMesa;
-        SESSION.g_iMesa=iMesa;
-        console.log("valor en session: --> " + SESSION.g_cMesa);
+    pintaBoton(iMesa){
+        var viMesa: any;
+        viMesa   = this._ctMesasHArray.find(cMesa=>cMesa.iMesa == iMesa );
+        switch (viMesa.iEstatusMesa) {
+            case 1:{
+                let myStyles = {
+                    'background-color': 'red',
+            }; 
+            return myStyles;
+            }
+            case 2: { this._cTiempo = "00:00:00";
+                let myStyles = {
+                    'background-color': 'gray',
+            }; 
+            return myStyles;
+            } 
+            case 3: { this._cTiempo = "00:00:01"
+                let myStyles = { 
+                    'background-color': 'greenyellow', 
+            }; 
+            return myStyles;
+            } 
+        }
     }
 
-    pintaBoton(imesa){
-        
-        
-            var viMesa: any;
+    pintaTiempo(iMesa){
 
-            viMesa  = this._ctMesasHArray.find(cMesa=>cMesa.iMesa == imesa);
+        var viMesa: any;
+        viMesa   = this._ctMesasHArray.find(cMesa=>cMesa.iMesa == iMesa );
+        if(viMesa.iEstatusMesa == 2){
+            this._cTiempo = "00:00:00";
+        }
+        if(viMesa.iEstatusMesa != 2){
+
+            var fecC = new Date(viMesa.dtCreado);
+            var fecA = new Date(new Date(new Date().toString().split('GMT')[0]+' UTC').toISOString().split('.')[0]);
+            var vdTTot = new Date();
+           
+
             
 
-            switch (viMesa.iEstatusMesa) {                
-                case 1:{
-
-                    let myStyles = {
-                        'background-color': 'red',      
-                        
-                    }; 
-                return myStyles;
-                
-                }
-                case 2:{
-                    let myStyles = {
-                        'background-color': 'gray',
-                        
-                    };
-                return myStyles;
-                }
-                case 3: {
-                    let myStyles = {
-                        'background-color': 'greenyellow', 
-                        
-                    }; 
-                return myStyles;
-                } 
-            }
-            
-             
-        }   
-}
+            vdTTot.setHours(fecA.getHours()-fecC.getHours(),
+                            fecA.getMinutes() -fecC.getMinutes(),
+                            fecA.getSeconds()-fecC.getSeconds());
+                                    
+                                   
+            var vdHoraT = vdTTot.getHours()   < 10 ? "0" + vdTTot.getHours(): vdTTot.getHours();
+            var vdMinT  = vdTTot.getMinutes() < 10 ? "0" + vdTTot.getMinutes(): vdTTot.getMinutes();
+            var vdSegT  = vdTTot.getSeconds() < 10 ? "0" + vdTTot.getSeconds(): vdTTot.getSeconds();
+            var deTieFin = vdHoraT + ":" + vdMinT + ":" + vdSegT;
+                    
+            this._cTiempo = deTieFin;            
+            //this._cTiempo = "00:00:01";
+        }
+        
+    }
+    regresaMesa(cMesa:string, iMesaID:number): void {
+        SESSION.g_cMesa= cMesa;
+        SESSION.g_iMesa= iMesaID;
+        console.log("valor en session: --> " + SESSION.g_cMesa);
+    }
+    
+    
+    
+} 
+ 

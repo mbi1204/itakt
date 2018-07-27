@@ -3,7 +3,7 @@
     <label text="Itakt" class= "marca" android.horizontalAlignment="center"></label>
 
     <ActionItem  text= "Cancelar"   [nsRouterLink] ="['/home']"  android.position = "popup"></ActionItem>
-    <ActionItem  text= "Actualizar" [nsRouterLink] ="['/login']"  android.position = "popup"></ActionItem>            
+    <ActionItem  text= "Actualizar"  android.position = "popup"></ActionItem>            
 </ActionBar>
 
 
@@ -15,11 +15,20 @@
                 <ScrollView>
                     <AbsoluteLayout ng-repeat="mesas in _ctMesasArray">
                         <AbsoluteLayout *ngFor="let mesas of _ctMesasArray">
+                            
                             <button height="70" width="90" [text]="mesas.cMesa" [top]="((mesas.deRow * 600) / 30.76)" [left]="(mesas.deColumn * 820) / 201.80" 
                                     *ngIf="mesas.iArea == 1" [nsRouterLink] ="['/home']" (tap)="regresaMesa(mesas.cMesa, mesas.iMesa)" 
                                     [ngStyle]="pintaBoton(mesas.iMesa)" >
-                            </button>     
+                            </button>        
                         </AbsoluteLayout>
+
+                        <AbsoluteLayout *ngFor="let mesas of _ctMesasArray">
+                            <label height="70" width="90" [text]='_cTiempo' [top]="((mesas.deRow * 600) / 30.76) + 60" [left]="(mesas.deColumn * 820) / 201.80 + 25" 
+                            [ngStyle]="pintaTiempo(mesas.iMesa)"  *ngIf="mesas.iArea == 1"> 
+                            </label>        
+                            
+                        </AbsoluteLayout>
+                        
                     </AbsoluteLayout>
                                         
                 </ScrollView>
@@ -35,6 +44,11 @@
                                     [ngStyle]="pintaBoton(mesas.iMesa)">
                                 </button>      
                             </AbsoluteLayout>
+                            <AbsoluteLayout *ngFor="let mesas of _ctMesasArray">
+                                    <label height="70" width="90" [text]='_cTiempo' [top]="((mesas.deRow * 600) / 30.76) + 60" [left]="(mesas.deColumn * 730) / 201.80 + 25" 
+                                           [ngStyle]="pintaTiempo(mesas.iMesa)" *ngIf="mesas.iArea == 2">
+                                    </label>        
+                            </AbsoluteLayout>                            
                         </AbsoluteLayout>
                     </ScrollView>
                 </GridLayout>            
