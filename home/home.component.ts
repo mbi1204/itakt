@@ -8,6 +8,7 @@ import { TNSFancyAlert } from "nativescript-fancyalert";
 import {Router,ActivatedRoute,Params} from '@angular/router';
 import { ImageSource, fromBase64, fromFile,fromData } from "tns-core-modules/image-source";
 
+
 @Component({
     selector: "ns-home",
     moduleId: module.id,
@@ -20,6 +21,7 @@ export class HomeComponent implements OnInit {
    public _cCveCia    :string;   
    public _cNombre    :string;
    public _iMesa      :number;
+   public _cMesa      :String;
    public _image      :ImageSource; 
    public _vtOrden    :vtOrden;
    public _iComensal  :number;
@@ -46,11 +48,17 @@ export class HomeComponent implements OnInit {
 
      
 
+                        
+
+        if (SESSION.g_cMesa != null){
+            this._cMesa     =  SESSION.g_cMesa;
+        }                     
+
         //si existe orden 
         if (SESSION.g_vtOden != null){
-            this._vtOrden =  SESSION.g_vtOden;   
+            this._vtOrden   =  SESSION.g_vtOden;   
             this._iComensal = this._vtOrden.iComensales;
-            this._iOrden    = String (this._vtOrden.iFolioSusp)  + "/" +  String (this._vtOrden.iIDDiario)   ;
+            this._iOrden    = String (this._vtOrden.iFolioSusp)  + "/" +  String (this._vtOrden.iIDDiario)   ;           
 
         }               
    
