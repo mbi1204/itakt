@@ -98,15 +98,12 @@ export class LoginComponent implements OnInit {
       },
       error => {
         console.log(error);
-        alert(
-          error.message +
-            "\n" +
-            error.error._errors[0]._errorMsg +
-            "\n" +
-            "Numero de Error" +
-            " " +
-            error.error._errors[0]._errorNum
-        );
+
+        TNSFancyAlert.showError("Error!", ""  ,   error.message +   "\n" +
+                                                  error.error._errors[0]._errorMsg + "\n" +
+                                                  "Numero de Error" + " " +  error.error._errors[0]._errorNum);        
+
+        
       }
     );
   }
