@@ -1,4 +1,4 @@
-import { NgModule } from "@angular/core";
+import { NgModule, Component } from '@angular/core';
 import { NativeScriptRouterModule } from "nativescript-angular/router";
 import { Routes } from "@angular/router";
 import { from } from "rxjs/internal/observable/from";
@@ -9,6 +9,8 @@ import { LoginComponent} from "./login/login.component";
 import { MesasComponent } from "./mesas/mesas.component";
 import { HomeComponent } from "./home/home.component";
 import { NOrdenComponent} from "./orden/nueva.component";
+import { ComandaComponent } from './comanda/comanda.component';
+import { ModificadoresComponent } from './comanda/modificadores.component';
 
 
 
@@ -16,11 +18,12 @@ const routes: Routes = [
     { path: "", redirectTo: "/login", pathMatch: "full" },
     { path: "login", component:LoginComponent},
     { path: "mesas", component:MesasComponent},
-    { path: "home",  component:HomeComponent}, 
-   
+    { path: "home",  component:HomeComponent},    
     { path: "items", component: ItemsComponent },
     { path: "item/:id", component: ItemDetailComponent },
     { path: "nOrden" , component: NOrdenComponent },
+    { path: "comanda", component: ComandaComponent},
+    { path: "modificadores", component: ModificadoresComponent},
 ];
 
 @NgModule({
