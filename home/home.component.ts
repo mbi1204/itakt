@@ -1,34 +1,65 @@
-import { Component,OnInit, Inject } from "@angular/core";
+import { Component,OnInit, Inject,} from "@angular/core";
+import { ItemEventData } from "ui/list-view"; 
+ 
 import 'nativescript-localstorage';
+
 import {vtOrden} from '../model/vtOrden'; 
+import {vtOrdenDet} from '../model/vtOrdenDet'; 
+
 import {SESSION ,FECHA } from '../service/global';
 import {ctEmpleado} from "../model/ctEmpleado";
+
+import {vtOrdenCService} from '../service/vtOrdenC.service'; 
+import {vtOrdenDetService} from '../service/vtOrdenDet.service'; 
+
+
 
 import { TNSFancyAlert } from "nativescript-fancyalert";
 import {Router,ActivatedRoute,Params} from '@angular/router';
 import { ImageSource, fromBase64, fromFile,fromData } from "tns-core-modules/image-source";
+
+import * as Toast from "nativescript-toast";
+import { GestureEventData } from "tns-core-modules/ui/gestures/gestures";
 
 
 @Component({
     selector: "ns-home",
     moduleId: module.id,
     templateUrl: "./home.component.html",
-    styleUrls:  ["./home.component.css"]  
+    styleUrls:  ["./home.component.css"] ,
+    providers: [vtOrdenCService, vtOrdenDetService] ,
+    
 })
 export class HomeComponent implements OnInit { 
+    
+   public _vtOrdenCObj:vtOrden;
+   public _vtOrdenCArray:Array<vtOrden> = [];
+   public _vtDetalleObj:vtOrdenDet;
+   public _vtDetalleArray:Array<vtOrdenDet> = [];
+
    public _cFecha     :string;
    public _ctEmpleado :ctEmpleado;
    public _cCveCia    :string;   
    public _cNombre    :string;
    public _iMesa      :number;
-   public _cMesa      :String;
+   public _cMesa      :string;
    public _image      :ImageSource; 
    public _vtOrden    :vtOrden;
    public _iComensal  :number;
    public _iOrden     :string;
+   public _iCuentas   :string;
+   public _iOrdenes   :string;
+   public _FolioSusp  :string;
+   public _cMesero    :string;
+   public _deArtTotal :number;
+   public _deDescuento:number;
+   public _deImpTotal :number;
+   public _deImporte:number;
+   public _cEstado:string;
+   
 
    
-   constructor( private _router:Router ) {}
+   constructor( private _router:Router, private _Service:vtOrdenCService, private _ServiceD: vtOrdenDetService,) {}
 
     ngOnInit(): void {
 
@@ -45,27 +76,301 @@ export class HomeComponent implements OnInit {
        this._cNombre = this._ctEmpleado.cNombre    + ' ' +
                        this._ctEmpleado.cApellidoP + ' ' +  
                        this._ctEmpleado.cApellidoM ;
-
-     
-
-                        
-
-        if (SESSION.g_cMesa != null){
-            this._cMesa     =  SESSION.g_cMesa;
-        }                     
-
+        
+        if (SESSION.g_cMesa != null){ 
+            this._cMesa     =  SESSION.g_cMesa; 
+        }                                            
+        
         //si existe orden 
         if (SESSION.g_vtOden != null){
-            this._vtOrden   =  SESSION.g_vtOden;   
-            this._iComensal = this._vtOrden.iComensales;
-            this._iOrden    = String (this._vtOrden.iFolioSusp)  + "/" +  String (this._vtOrden.iIDDiario)   ;           
+            this._vtOrden =  SESSION.g_vtOden;   
+            this._iComensal = 0;
+            this._iOrden    = String (this._vtOrden.iFolioSusp)  + "/" +  String (this._vtOrden.iIDDiario);
+        } 
 
-        }               
-   
+            /*Busca encabezado de la venta*/
+            var respuesta: any;
+            var lista: any  ;
+            var Error: any;
+            var Mensaje: any;
+                   
+            
+            this._Service.getOrdenC(SESSION.g_cCveCIA , SESSION.g_cMesa).subscribe((result) => { 
+                respuesta = result.body;
+                console.log("mensaje->" + respuesta);
+                Error   = respuesta.response.oplError;
+                Mensaje = respuesta.response.opcError;      
+                
+                    
+                if (Error == 'true'){
+                    alert(Mensaje);
+                }else {
+                    lista = respuesta.response.tt_vtVtaSusp.tt_vtVtasusp;
+                    
+                   
+                                    
+                    lista.forEach(item=>{ 
+                        this._vtOrdenCObj = new vtOrden(
+                            item.cCveCia,
+                            item.iFolioSusp,
+                            item.dtFecha,
+                            item.iSucursal,
+                            item.cCveUsuario,
+                            item.cTipoTrans,
+                            item.cEstado,
+                            item.deSubtotal,
+                            item.deImpuesto,
+                            item.deDescuento,
+                            item.deImporte,
+                            item.deTotArticulos,
+                            item.cCliente,
+                            item.lCredito,
+                            item.iMonID,
+                            item.deTipoCambio,
+                            item.dtFHora,
+                            item.lFacturar,
+                            item.iAlmacen,
+                            item.dtCreado,
+                            item.dtModificado,
+                            item.cUSuario,
+                            item.iFolRef,
+                            item.cObs,
+                            item.iNivelP, 
+                            item.lVtaDirecta,
+                            item.cEntregarA,
+                            item.iLocalID, 
+                            item.cTienda,
+                            item.lLlevar,
+                            item.cMesa,
+                            item.iComensales, 
+                            item.iCortesia, 
+                            item.iIDDiario, 
+                            item.cPartidaR,
+                            item.cNombreR,
+                            item.cRazonID,
+                            item.cUsuAbre,
+                            item.cNomAbre,
+                            item.dtTerminal,
+                        ); 
+                        SESSION.g_vtOden = this._vtOrdenCObj;
+                        this._vtOrdenCArray.push(this._vtOrdenCObj);
+                                               
+                    }); 
+                } 
+            }
+    
+            , (error) => {
+                console.log("result");
+                console.log(error);
+            });    
+    } 
+
+      
+    /*Identifica el estatus de la cuenta y lo asigna*/
+    pintaOrden(cEstado){
+        var viOrden: any;
+        var viOrdenes: any;
+        
+        viOrden   =  this._vtOrdenCArray.find(cMesa=>cMesa.cMesa ==  String(SESSION.g_iMesa));
+        viOrdenes =  this._vtOrdenCArray.find(cMesa=>cMesa.cMesa ==  String(SESSION.g_iMesa));
+
+        
+            /*viOrden   =  this._vtOrdenCArray.find(cMesa=>cMesa.iFolioSusp == SESSION.g_vtOden );
+            this._iOrden  = viOrden.iFolioSusp + "/" + viOrden.iIDDiario  ;
+            this._cMesero = viOrden.cUSuario
+            this._iComensal = viOrden.iComensales;*/
+        
+
+        switch (cEstado) {
+            case "PENDIENTE":{
+                let myStyles = {
+                    'background-color': 'greenyellow',
+            }; 
+            return myStyles;
+            }
+            case "IMPRESO": { 
+                let myStyles = {
+                    'background-color': 'red',
+            }; 
+            return myStyles;
+            } 
+        }
+    } 
+
+       
+    recuperaOrden(viFolioSusp){
+
+        console.log("recupera orden : " + viFolioSusp);
+
+        var respuesta:any;
+        var lista:any  ;
+        var Error:any;
+        var Mensaje:any;
+        var viOrden:any;
+        var viOrdenes:any;
+        this._vtDetalleArray = []; 
+
+        SESSION.g_iOrden = String(viFolioSusp);
+        
+        viOrden   =  this._vtOrdenCArray.find(cMesa=>cMesa.iFolioSusp ==  (viFolioSusp) );
+        viOrdenes =  this._vtOrdenCArray.find(cMesa=>cMesa.iFolioSusp ==  (viFolioSusp) );
+        this._iOrden  = viOrden.iIDDiario + "/" + viOrden.iFolioSusp;
+
+        Toast.makeText("Orden Seleccionada " + viOrden.iIDDiario + "/" + viOrden.iFolioSusp).show() ;
+
+        this._ServiceD.getOrdenDet(SESSION.g_cCveCIA, SESSION.g_iOrden).subscribe((result) => { 
+            respuesta = result.body;
+            console.log("mensaje->" + respuesta);
+            Error   = respuesta.response.oplError;
+            Mensaje = respuesta.response.opcError;       
+           
+            if (Error == 'true'){
+                alert(Mensaje);
+            }else {                                        
+                lista = respuesta.response.tt_vtVtaSuspDet.tt_vtVtaSuspDet;
+
+                lista.forEach(item=>{ 
+                    this._vtDetalleObj = new vtOrdenDet(
+                        item.cCveCia,
+                        item.iFolioSusp,
+                        item.iPartida,
+                        item.iComensal,
+                        item.dtFecha,
+                        item.iSucursal,
+                        item.cUsuarioV,     
+                        item.cTipoTrans,    
+                        item.cEstado,       
+                        item.cCodRazon,     
+                        item.cCliente,
+                        item.iArticulo,
+                        item.cArticulo,     
+                        item.iSubProd,
+                        item.cDescripcion,  
+                        item.dePrecio,
+                        item.deImpuesto,
+                        item.deValorImp,
+                        item.dePrecVta,
+                        item.deDescuento,
+                        item.dePorcDesc,
+                        item.dePrecioUnit,
+                        item.deCantidad,
+                        item.deImporte,
+                        item.cUDF1,
+                        item.deUDF1,
+                        item.cUDF2,                        
+                        item.deUDF2,
+                        item.cUDF3,
+                        item.deUDF3,
+                        item.lEsDev,
+                        item.iFolVtaO,
+                        item.iOServID,
+                        item.dtCreado,
+                        item.dtModificado,
+                        item.cUsuario,
+                        item.cObs,
+                        item.cEntregarA,
+                        item.lLlevar,
+                        item.cCompartir,
+                        item.iTermino,
+                        item.dtFHora,
+                        item.iImpresora,
+                        item.lLibre,
+                        item.vcMesa,
+                        item.iCortesia,
+                        item.iIDDiario,
+                        item.cPartidaR,
+                        item.cNombreR,
+                        item.cRazonID,
+                        item.cTipoDesc,
+                        item.iCOrigen,
+                        item.iCDestino,
+                        item.deTCantidad,
+                        item.lTraspaso,
+                        item.iGrupo,
+                        item.lCancelado,
+                        item.deCantDesc,
+                        item.deCantCanc,
+                        item.cUsuOrdena,
+                        item.cNomOrdena,
+                        item.cUsuCancela,
+                        item.cNomCancela,
+                        item.cUsuCortesia,
+                        item.cNomCortesia,
+                        item.cUsuCambPre,
+                        item.cNomCambPre,
+                        item.cUsuDesc,
+                        item.cNomDesc,
+                        item.dtTermina,
+                        item.dtCortesia,
+                        item.dtCancela,
+                        item.dtCambioP,
+                        item.dtDescuento,
+                        item.lLibera,); 
+
+                    this._vtDetalleArray.push(this._vtDetalleObj);
+                }); 
+            } 
+        }, (error) => {
+            console.log("result");
+            console.log(error);
+        });
+
+        var viTotalEnc: any;
+        viTotalEnc = this._vtOrdenCArray.find(cMesa=>cMesa.iFolioSusp == (viFolioSusp) );
+        this._iComensal = viTotalEnc.iComensales;
+        this._iOrden    = String (viTotalEnc.iIDDiario) + "/" + String (viTotalEnc.iFolioSusp);
+        this._deArtTotal  = viTotalEnc.deTotArticulos; 
+        this._deDescuento = viTotalEnc.deDescuento; 
+        this._deImpTotal  = viTotalEnc.deImporte; 
+        this._cMesero     = viTotalEnc.cCveUsuario;
+
+        
     }
+         
+    /*Realiza calculos del detalle por partida en la lista*/
+    calculaTotal(iPartida){
+        var viTotal: any;
+        viTotal   = this._vtDetalleArray.find(cMesa=>cMesa.iPartida == iPartida );
+        this._deImporte = viTotal.dePrecVta * viTotal.deCantidad;
+        
+        
+        if(viTotal.cEstado == ""){
+            this._cEstado = "A";
+        }
+        else if(viTotal.cEstado == "Ordenado"){  
+            this._cEstado = "O";
+        }   
+    }
+
+    /*Recupera la partida del articulo*/
+    onItemTap(args: ItemEventData) : void{
+        SESSION.g_iPartida = this._vtDetalleArray[args.index].iPartida;
+        //console.log("on item tap " + SESSION.g_iPartida);
+    }
+    
+    onDoubleTap(args: GestureEventData) {
+        var viEnc: any;
+        var viDet: any;
+        var vcLlevar: any;
+
+        viEnc = this._vtOrdenCArray.find(cMesa=>cMesa.iFolioSusp == (SESSION.g_iOrden));
+        //viDet = this._vtDetalleArray.find(cMesa=>cMesa.iFolioSusp == (SESSION.g_iPartida)  );
+        
+        if (viEnc.lLlevar == false){
+            vcLlevar = "No";
+        }else{
+            vcLlevar = "Si"
+        }
+        
+        TNSFancyAlert.showSuccess("Abrio orden: " + viEnc.cNomAbre + ", Orden: " + viEnc.iFolioSusp + ", Llevar: " + vcLlevar +  " Registrados:");
+        //
+        
+    }
+     
+}
 
    
     
-}
+
 
 

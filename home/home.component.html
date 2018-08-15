@@ -21,36 +21,61 @@
             <Image src="~/images/Comensal.png" class="calendar" row="1" col="0"></Image>
             <TextView hint="Comensales" class="textComensal" row="1" col="1" horizontalAlignment="left" margin="3" [(ngModel)]='_iComensal'></TextView>
             <Image src="~/images/Mesero.png" class="mesero" row="2" col="0"></Image>
-            <TextView hint="Mesero" class="textMesero" row="2" col="1" horizontalAlignment="left"></TextView>
+            <TextView hint="Mesero" class="textMesero" row="2" col="1" horizontalAlignment="left" [(ngModel)]='_cMesero'></TextView>
         </DockLayout>
 
         <DockLayout>
-
             <Image src="~/images/orden.png" class="mesa" [nsRouterLink]="['/nOrden']" row="0" col="0"></Image>
-            <TextView hint="Orden" class="textOrden" row="0" col="1" [(ngModel)]='_iOrden'></TextView>
-            <TextView hint="Ordenes" class="Ordenes  " row="0" col="2" backgroundColor="#F2F2F2"></TextView>
-
-
+            <TextView hint="Orden" class="textOrden" row="0" col="1"   [(ngModel)]='_iOrden'></TextView>
+            
+            <AbsoluteLayout *ngFor="let orden of _vtOrdenCArray">
+                    <label [text]='orden.iIDDiario' [ngStyle]="pintaOrden(orden.cEstado)"  
+                    class="textOrdenes" (tap)="recuperaOrden(orden.iFolioSusp)"> </label>                       
+            </AbsoluteLayout>               
         </DockLayout>
 
-        <GridLayout rows="auto, auto" columns="auto, *, auto" width="750" height="700" backgroundColor="lightgray">
-            <Label text="Comenzal" row="0" col="0" backgroundColor="red"></Label>
-            <Label text="Producto" row="0" col="1" backgroundColor="green"></Label>
-            <Label text="Precio" row="0" col="3" backgroundColor="yellow"></Label>
-            <Label text="Cantidad" row="0" col="4" backgroundColor="gray"> </Label>
-        </GridLayout>
+        <!--<GridLayout rows="auto, auto" columns="auto, *, auto" width="750" height="20" backgroundColor="lightgray">-->
+        <WrapLayout orientation="horizontal" width="750" height="20" backgroundColor="lightgray">
+            <Label text="Comensal" width="75" height="20" backgroundColor="yellow"></Label>
+            <Label text="Producto" width="390" height="20" backgroundColor="yellow"></Label>
+            <Label text="Cantidad" width="75" height="20" backgroundColor="yellow"> </Label> 
+            <Label text="Precio"   width="75" height="20" backgroundColor="yellow"></Label>
+            <Label text="Total"    width="75" height="20" backgroundColor="yellow"> </Label>                                       
+            <Label text="St."      width="60" height="20" backgroundColor="yellow"> </Label>
+        <!--</GridLayout>-->
+        </WrapLayout>
+
+        <DockLayout >
+            <ListView [items]="_vtDetalleArray" (doubleTap)="onDoubleTap($event)" (itemTap)="onItemTap($event)" id="detalle" class="list-group" style="height:1350px">
+                <ng-template let-vtOrdenDet="item">
+                    <FlexboxLayout flexDirection="row" class="list-group-item">  
+                        <Label [text]="vtOrdenDet.iComensal" style="width: 20%" ></Label>                          
+                        <Label [text]="vtOrdenDet.cDescripcion" style="width:55%" ></Label>
+                        <Label [text]="vtOrdenDet.deCantidad" style="width: 15%" ></Label>
+                        <Label [text]="vtOrdenDet.dePrecVta"  style="width: 20%" ></Label>
+                        <Label [ngStyle]="calculaTotal(vtOrdenDet.iPartida)" [text]='_deImporte'  style="width: 20%" ></Label>
+                        <Label [ngStyle]="calculaTotal(vtOrdenDet.iPartida)" [text]='_cEstado'  style="width: 10%" ></Label>
+                    </FlexboxLayout>
+                </ng-template>
+            </ListView>                           
+        </DockLayout> 
 
 
-
+        <DockLayout>
+                <label    text="Productos"  row="1" col="0" horizontalAlignment="left"></label>               
+                <TextView class="textOrden" [text] ='_deArtTotal' row="1" col="1" horizontalAlignment="left"> </TextView>
+                <label    text="Descuento"  row="1" col="2" horizontalAlignment="left"></label>
+                <TextView class="textOrden" [text] ='_deDescuento' row="1" col="3" horizontalAlignment="left"></TextView>
+                <label    text="Total"      row="1" col="4" horizontalAlignment="left"></label>
+                <TextView class="textOrden" [text] ='_deImpTotal'row="1" col="5" horizontalAlignment="left"></TextView>
+        </DockLayout>        
         <DockLayout>
             <Image src="~/images/calendar.png" class="calendar" row="1" col="2"></Image>
             <TextView nhit="Fecha" class="textMesero" row="1" col="3" horizontalAlignment="left" [(ngModel)]='_cFecha'> </TextView>
-
             <!--<Image src="~/images/user.png" class="mesero" row="2" col="2"></Image>-->
             <Image [src]="_image" class="mesero" row="2" col="2" [nsRouterLink]="['/login']"></Image>
             <TextView class="textMesero" [(ngModel)]='_cNombre' row="2" col="3" horizontalAlignment="left"></TextView>
         </DockLayout>
-
-
-    </StackLayout>
+    </StackLayout>    
 </ScrollView>
+

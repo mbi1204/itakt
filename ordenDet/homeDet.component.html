@@ -1,0 +1,13 @@
+<ListView [items]="_vtDetalleArray" (itemTap)="onItemTap($event)">
+    <ng-template let-vtOrdenDet="item">
+        <FlexboxLayout flexDirection="row" class="list-group-item">
+                <Label [text]='vtOrdenDet.iComensal'    class="list-group-item-heading" verticalAlignment="center"    style="width: 60%" ></Label>            
+                <Label [text]='vtOrdenDet.cDescripcion' class="list-group-item-heading" verticalAlignment="center" style="width: 60%" ></Label>
+                <Label [text]='vtOrdenDet.deCantidad'   class="list-group-item-heading" verticalAlignment="center"   style="width: 60%" ></Label>               
+                <Label [text]='vtOrdenDet.dePrecVta'    class="list-group-item-heading" verticalAlignment="center"    style="width: 60%" ></Label>                
+                <Label [text]='vtOrdenDet.cEstado'      class="list-group-item-heading" verticalAlignment="center"      style="width: 60%" ></Label>                
+        </FlexboxLayout>
+    </ng-template>
+</ListView>    
+
+

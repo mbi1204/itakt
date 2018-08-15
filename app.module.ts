@@ -14,6 +14,7 @@ import { MesasComponent } from "./mesas/mesas.component";
 import { HomeComponent } from "./home/home.component";
 import { HomeComponent2 } from "./home2/home2.component";
 import { NOrdenComponent} from "./orden/nueva.component";
+import { DetalleComponent} from "./ordenDet/vtOrdenDet.component";
 
 @NgModule({
     bootstrap: [
@@ -31,10 +32,11 @@ import { NOrdenComponent} from "./orden/nueva.component";
         ItemDetailComponent,
         LoginComponent,
         HomeComponent,
+        
         MesasComponent,
        
         NOrdenComponent,
-           
+        DetalleComponent
         
     ],
     providers: [

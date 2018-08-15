@@ -9,7 +9,7 @@ var meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Ag
 
 /*URL de conexion servicio rest*/
 export const GLOBAL = {
-    URL: 'http://192.168.2.13:8810/itakt/rest/itaktService/',
+    URL: 'http://192.168.2.204:8810/itakt/rest/itaktService/',
     
 };
 
@@ -19,7 +19,9 @@ export const SESSION = {
     g_ctEmpleado  : null,    
     g_vtOden      : null,
     g_cMesa       : null,
-    g_iMesa       : null,    
+    g_iMesa       : null,
+    g_iOrden      : null,
+    g_iPartida    : null,    
     
 
 };

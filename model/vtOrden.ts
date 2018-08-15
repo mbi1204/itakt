@@ -4,7 +4,8 @@ fecha: 28/06/2018
 obs  : modelo de la tabla  vtVtaSusp Encabezado de la Orden
 */
 export class vtOrden{
-
+    
+    
  
     constructor( 
         public cCveCia :string,
