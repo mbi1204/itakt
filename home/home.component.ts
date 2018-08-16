@@ -5,13 +5,14 @@ import 'nativescript-localstorage';
 
 import {vtOrden} from '../model/vtOrden'; 
 import {vtOrdenDet} from '../model/vtOrdenDet'; 
+import {vtOrdenMod} from '../model/vtOrdenMod';
 
 import {SESSION ,FECHA } from '../service/global';
 import {ctEmpleado} from "../model/ctEmpleado";
 
 import {vtOrdenCService} from '../service/vtOrdenC.service'; 
 import {vtOrdenDetService} from '../service/vtOrdenDet.service'; 
-
+import {vtOrdenModService} from '../service/vtOrdenMod.service';
 
 
 import { TNSFancyAlert } from "nativescript-fancyalert";
@@ -27,7 +28,7 @@ import { GestureEventData } from "tns-core-modules/ui/gestures/gestures";
     moduleId: module.id,
     templateUrl: "./home.component.html",
     styleUrls:  ["./home.component.css"] ,
-    providers: [vtOrdenCService, vtOrdenDetService] ,
+    providers: [vtOrdenCService, vtOrdenDetService, vtOrdenModService] ,
     
 })
 export class HomeComponent implements OnInit { 
@@ -36,6 +37,8 @@ export class HomeComponent implements OnInit {
    public _vtOrdenCArray:Array<vtOrden> = [];
    public _vtDetalleObj:vtOrdenDet;
    public _vtDetalleArray:Array<vtOrdenDet> = [];
+   public _vtDetalleMod:vtOrdenMod;
+   public _vtDetModArray:Array<vtOrdenMod> = [];
 
    public _cFecha     :string;
    public _ctEmpleado :ctEmpleado;
@@ -56,10 +59,14 @@ export class HomeComponent implements OnInit {
    public _deImpTotal :number;
    public _deImporte:number;
    public _cEstado:string;
+   public _iPartida:number;
+   public _tiempo:string;
+   public selectedOption: string = "";
    
 
    
-   constructor( private _router:Router, private _Service:vtOrdenCService, private _ServiceD: vtOrdenDetService,) {}
+   constructor( private _router:Router, private _Service:vtOrdenCService, 
+                private _ServiceD: vtOrdenDetService, private _ServiceMod:vtOrdenModService) {}
 
     ngOnInit(): void {
 
@@ -158,7 +165,7 @@ export class HomeComponent implements OnInit {
                     }); 
                 } 
             }
-    
+            
             , (error) => {
                 console.log("result");
                 console.log(error);
@@ -200,8 +207,6 @@ export class HomeComponent implements OnInit {
        
     recuperaOrden(viFolioSusp){
 
-        console.log("recupera orden : " + viFolioSusp);
-
         var respuesta:any;
         var lista:any  ;
         var Error:any;
@@ -218,6 +223,7 @@ export class HomeComponent implements OnInit {
 
         Toast.makeText("Orden Seleccionada " + viOrden.iIDDiario + "/" + viOrden.iFolioSusp).show() ;
 
+        /*Busca el detalle de la orden*/
         this._ServiceD.getOrdenDet(SESSION.g_cCveCIA, SESSION.g_iOrden).subscribe((result) => { 
             respuesta = result.body;
             console.log("mensaje->" + respuesta);
@@ -289,7 +295,8 @@ export class HomeComponent implements OnInit {
                         item.iGrupo,
                         item.lCancelado,
                         item.deCantDesc,
-                        item.deCantCanc,
+                        item.deImpDesc,
+                        item.deCantCan,
                         item.cUsuOrdena,
                         item.cNomOrdena,
                         item.cUsuCancela,
@@ -308,6 +315,44 @@ export class HomeComponent implements OnInit {
                         item.lLibera,); 
 
                     this._vtDetalleArray.push(this._vtDetalleObj);
+                }); 
+            } 
+        }, (error) => {
+            console.log("result");
+            console.log(error);
+        });
+
+        /*Busca si el platillo tiene modificadores*/
+        this._ServiceMod.getOrdenMod(SESSION.g_cCveCIA, SESSION.g_iOrden).subscribe((result) => { 
+            respuesta = result.body;
+            console.log("mensaje->" + respuesta);
+            Error   = respuesta.response.oplError;
+            Mensaje = respuesta.response.opcError;       
+           
+            if (Error == 'true'){
+                alert(Mensaje);
+            }else {                                        
+                lista = respuesta.response.tt_vtVtaSuspMod.tt_vtVtaSuspMod;
+                console.log("resultado en mod" + respuesta.response.tt_vtVtaSuspMod.tt_vtVtaSuspMod[0].cModArt);
+                lista.forEach(item=>{ 
+                    this._vtDetalleMod = new vtOrdenMod(
+                        item.cCveCia,
+                        item.iFolioSusp,
+                        item.iPartidaArt,
+                        item.iPartida,
+                        item.cModSubC,
+                        item.iComensal,
+                        item.cArticulo,   
+                        item.iModArt,   
+                        item.cModArt,
+                        item.iCantMod,   
+                        item.lSubProducto,   
+                        item.cUsuario,
+                        item.dtCreado,   
+                        item.dtModificado,
+                        ); 
+
+                    this._vtDetModArray.push(this._vtDetalleMod);
                 }); 
             } 
         }, (error) => {
@@ -345,25 +390,125 @@ export class HomeComponent implements OnInit {
     /*Recupera la partida del articulo*/
     onItemTap(args: ItemEventData) : void{
         SESSION.g_iPartida = this._vtDetalleArray[args.index].iPartida;
-        //console.log("on item tap " + SESSION.g_iPartida);
+        this._iPartida = this._vtDetalleArray[args.index].iPartida;
+        
+        
     }
     
+    /*Muestra informacion de la partida en el detalle*/
     onDoubleTap(args: GestureEventData) {
+        
         var viEnc: any;
         var viDet: any;
-        var vcLlevar: any;
+        var viMod: any;
+        var viCantC: any;
 
-        viEnc = this._vtOrdenCArray.find(cMesa=>cMesa.iFolioSusp == (SESSION.g_iOrden));
-        //viDet = this._vtDetalleArray.find(cMesa=>cMesa.iFolioSusp == (SESSION.g_iPartida)  );
+        var vcLlevar: any;
+        var vcLibera:string;
+        var vcEstado:string;
+        var vcEstatus:string;
         
+        
+
+        viEnc = this._vtOrdenCArray.find(viOrden=>viOrden.iFolioSusp == (SESSION.g_iOrden));
+        viDet = this._vtDetalleArray.find(viOrden=>viOrden.iPartida == (this._iPartida));
+        viMod = this._vtDetModArray.find(viOrden=>viOrden.iPartidaArt == (this._iPartida));
+        
+
+        console.log("modificadores: -> " + viMod.cModArt);
+
         if (viEnc.lLlevar == false){
             vcLlevar = "No";
         }else{
             vcLlevar = "Si"
         }
+
+        if(viDet.lLibera == true){ 
+            vcLibera= "LIBERADO"
+        }  else {
+            vcLibera= "ORDENADO"
+        } 
+
         
-        TNSFancyAlert.showSuccess("Abrio orden: " + viEnc.cNomAbre + ", Orden: " + viEnc.iFolioSusp + ", Llevar: " + vcLlevar +  " Registrados:");
-        //
+        
+        /*Busca el estatus del platillo y lo asigna*/
+        if (viDet.cEstado == "") {
+            vcEstado = "-" + "\n"+ "Cancelados: " +  viDet.deCantCan;      
+        }  
+
+        if(viDet.lCancelado && (viDet.deCantidad - viDet.deCantCan == 0) ){
+           
+            if(viDet.cEstado == "Ordenado") {      
+
+                    viDet  = this._vtDetalleArray.find(cMesa=>cMesa.iPartida == SESSION.g_iPartida  );
+                var fecC   = new Date(viDet.dtCreado);
+                var fecA   = new Date(new Date(new Date().toString().split('GMT')[0]+' UTC').toISOString().split('.')[0]);
+                var vdTTot = new Date();
+                var vdFCan = new Date(viDet.dtCancela);
+                
+                vdTTot.setHours(fecA.getHours()-fecC.getHours(),
+                                fecA.getMinutes() -fecC.getMinutes(),
+                                fecA.getSeconds()-fecC.getSeconds());
+                
+                var vdtFCan  = (vdFCan.getHours() + ":" + vdFCan.getMinutes() + ":" + vdFCan.getSeconds());                                
+                var vdtTO    = (fecC.getHours()   + ":" + fecC.getMinutes()   + ":" + fecC.getSeconds());         
+                var vdHoraT  = vdTTot.getHours()   < 10 ? "0" + vdTTot.getHours():   vdTTot.getHours();
+                var vdMinT   = vdTTot.getMinutes() < 10 ? "0" + vdTTot.getMinutes(): vdTTot.getMinutes();
+                var vdSegT   = vdTTot.getSeconds() < 10 ? "0" + vdTTot.getSeconds(): vdTTot.getSeconds();
+                
+                var deTieFin = vdHoraT + ":" + vdMinT + ":" + vdSegT;;
+                
+                
+                this._tiempo = deTieFin;
+                vcEstado = "Cancelado, Ordenado por: " + viDet.cNomOrdena + ", Solicitud: " + vcLibera + ", Ordenado: " + vdtTO + ", Tiempo Ordenado: " + this._tiempo + " minutos" 
+                           + "\n"+ "Cancela: "+ viDet.cNomCancela + " " + vdtFCan +  "\n" + "Cancelados: " + viDet.deCantCan;
+            }
+            
+        
+
+        }else if(viDet.cEstado == "Ordenado") {      
+
+                viDet = this._vtDetalleArray.find(cMesa=>cMesa.iPartida == SESSION.g_iPartida  );
+                var fecC = new Date(viDet.dtCreado);
+                var fecCO = new Date(viDet.dtCortesia);
+                var fecA = new Date(new Date(new Date().toString().split('GMT')[0]+' UTC').toISOString().split('.')[0]);
+                var vdTTot = new Date();
+                
+                
+                vdTTot.setHours(fecA.getHours()-fecC.getHours(),
+                                fecA.getMinutes() -fecC.getMinutes(),
+                                fecA.getSeconds()-fecC.getSeconds());
+                
+                var vdtTO    = (fecC.getHours() + ":" + fecC.getMinutes() + ":" + fecC.getSeconds());         
+                var vdHoraT  = vdTTot.getHours()   < 10 ? "0" + vdTTot.getHours(): vdTTot.getHours();
+                var vdMinT   = vdTTot.getMinutes() < 10 ? "0" + vdTTot.getMinutes(): vdTTot.getMinutes();
+                var vdSegT   = vdTTot.getSeconds() < 10 ? "0" + vdTTot.getSeconds(): vdTTot.getSeconds();
+                var deTieFin = vdHoraT + ":" + vdMinT + ":" + vdSegT;;
+
+                
+                this._tiempo = deTieFin;
+                vcEstado = "Ordenado, Ordenado por: " + viDet.cNomOrdena + ", Solicitud: " + vcLibera + ", Ordenado: " + vdtTO + ", Tiempo Ordenado: " + this._tiempo 
+                         + " minutos" + "\n"+ "Cancelados: " + viDet.deCantCan;
+                
+                if (viDet.cTipoDesc == "CO"){
+                    var vdtTC    = (fecCO.getHours() + ":" + fecCO.getMinutes() + ":" + fecCO.getSeconds());   
+                    vcEstado = vcEstado + "\n" + "Aplica Cortesía: " + viDet.cNomCortesia + ", " + vdtTC;
+                }
+        }else if(viDet.cEstado == "Terminado"){
+        
+
+        }
+        
+            
+          
+
+        /*Crea el mensaje de informacion*/
+        TNSFancyAlert.showInfo("INFORMACION", "Abrio orden: "  + viEnc.cNomAbre + ", Orden: "  + viEnc.iFolioSusp + ", Llevar: " + vcLlevar + "\n" +
+                                "Registrados: "  + viDet.deCantidad +  "\n" +
+                                "Modif: " + viMod.cModArt + ", " +  viDet.cCompartir + ", " + viDet.cObs + "\n" +
+                                "Estado: " + vcEstado + "\n",
+                                //",Cancelados: " + viCantC.deCantCan, 
+                                "ACEPTAR"  );
         
     }
      

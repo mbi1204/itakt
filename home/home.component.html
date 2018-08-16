@@ -49,7 +49,7 @@
             <ListView [items]="_vtDetalleArray" (doubleTap)="onDoubleTap($event)" (itemTap)="onItemTap($event)" id="detalle" class="list-group" style="height:1350px">
                 <ng-template let-vtOrdenDet="item">
                     <FlexboxLayout flexDirection="row" class="list-group-item">  
-                        <Label [text]="vtOrdenDet.iComensal" style="width: 20%" ></Label>                          
+                        <Label [text]="vtOrdenDet.iComensal" style="width: 20%"></Label>                          
                         <Label [text]="vtOrdenDet.cDescripcion" style="width:55%" ></Label>
                         <Label [text]="vtOrdenDet.deCantidad" style="width: 15%" ></Label>
                         <Label [text]="vtOrdenDet.dePrecVta"  style="width: 20%" ></Label>

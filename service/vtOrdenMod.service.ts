@@ -5,7 +5,7 @@ import { HttpClient , HttpHeaders } from "@angular/common/http";
 
 
 @Injectable()
-export class vtOrdenDetService{
+export class vtOrdenModService{
 
     public url:string;
 
@@ -14,16 +14,17 @@ export class vtOrdenDetService{
        
     }
 
-    getOrdenDet(ipcCveCia :string , ipcFolio :string){
+    getOrdenMod(ipcCveCia :string , ipiFolioSusp :string){
         let headers = new HttpHeaders({
             "AuthKey": "",
             "AuthToken": "",
             "Content-Type": "application/json",
             "ipcCveCia": ipcCveCia,
-            "ipcFolio": ipcFolio,
+            "ipiFolioSusp": ipiFolioSusp,
+            
          });
         
-        return this._http.get(this.url + 'vtOrdenDet/'  , { observe: 'response',   headers: headers });
+        return this._http.get(this.url + 'vtOrdenMod/'  , { observe: 'response',   headers: headers });
     }
 
 

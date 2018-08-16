@@ -32,5 +32,8 @@
 }
 .textOrdenes{
     width: 10%; 
-    font-size: 18%
+    font-size: 25%
+}
+.active {
+    color:red;
 }
