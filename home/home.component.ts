@@ -1,7 +1,7 @@
-import { Component,OnInit, Inject,} from "@angular/core";
-import { ItemEventData } from "ui/list-view"; 
- 
+import { Component,OnInit, Inject} from "@angular/core";
+import { ItemEventData, ListView } from "ui/list-view"; 
 import 'nativescript-localstorage';
+
 
 import {vtOrden} from '../model/vtOrden'; 
 import {vtOrdenDet} from '../model/vtOrdenDet'; 
@@ -13,7 +13,6 @@ import {ctEmpleado} from "../model/ctEmpleado";
 import {vtOrdenCService} from '../service/vtOrdenC.service'; 
 import {vtOrdenDetService} from '../service/vtOrdenDet.service'; 
 import {vtOrdenModService} from '../service/vtOrdenMod.service';
-
 
 import { TNSFancyAlert } from "nativescript-fancyalert";
 import {Router,ActivatedRoute,Params} from '@angular/router';
@@ -32,6 +31,8 @@ import { GestureEventData } from "tns-core-modules/ui/gestures/gestures";
     
 })
 export class HomeComponent implements OnInit { 
+    public myItems: Array<vtOrdenDet>;
+    
     
    public _vtOrdenCObj:vtOrden;
    public _vtOrdenCArray:Array<vtOrden> = [];
@@ -62,14 +63,16 @@ export class HomeComponent implements OnInit {
    public _iPartida:number;
    public _tiempo:string;
    public selectedOption: string = "";
-   
+   public prop: string = "Item 1";
+   selectedIndex: number;
 
+   
    
    constructor( private _router:Router, private _Service:vtOrdenCService, 
                 private _ServiceD: vtOrdenDetService, private _ServiceMod:vtOrdenModService) {}
-
+    
     ngOnInit(): void {
-
+        
         if  (SESSION.g_ctEmpleado == null) {
             TNSFancyAlert.showError("Error!", ""  , "error en la carga de la session del empleado");            
             this._router.navigate(["/login"]);
@@ -170,9 +173,10 @@ export class HomeComponent implements OnInit {
                 console.log("result");
                 console.log(error);
             });    
+
+            
     } 
 
-      
     /*Identifica el estatus de la cuenta y lo asigna*/
     pintaOrden(cEstado){
         var viOrden: any;
@@ -180,14 +184,7 @@ export class HomeComponent implements OnInit {
         
         viOrden   =  this._vtOrdenCArray.find(cMesa=>cMesa.cMesa ==  String(SESSION.g_iMesa));
         viOrdenes =  this._vtOrdenCArray.find(cMesa=>cMesa.cMesa ==  String(SESSION.g_iMesa));
-
-        
-            /*viOrden   =  this._vtOrdenCArray.find(cMesa=>cMesa.iFolioSusp == SESSION.g_vtOden );
-            this._iOrden  = viOrden.iFolioSusp + "/" + viOrden.iIDDiario  ;
-            this._cMesero = viOrden.cUSuario
-            this._iComensal = viOrden.iComensales;*/
-        
-
+    
         switch (cEstado) {
             case "PENDIENTE":{
                 let myStyles = {
@@ -204,7 +201,6 @@ export class HomeComponent implements OnInit {
         }
     } 
 
-       
     recuperaOrden(viFolioSusp){
 
         var respuesta:any;
@@ -214,6 +210,7 @@ export class HomeComponent implements OnInit {
         var viOrden:any;
         var viOrdenes:any;
         this._vtDetalleArray = []; 
+
 
         SESSION.g_iOrden = String(viFolioSusp);
         
@@ -321,19 +318,53 @@ export class HomeComponent implements OnInit {
             console.log("result");
             console.log(error);
         });
-
-        /*Busca si el platillo tiene modificadores*/
-        this._ServiceMod.getOrdenMod(SESSION.g_cCveCIA, SESSION.g_iOrden).subscribe((result) => { 
+        var viTotalEnc: any;
+        viTotalEnc = this._vtOrdenCArray.find(cMesa=>cMesa.iFolioSusp == (viFolioSusp) );
+        this._iComensal = viTotalEnc.iComensales;
+        this._iOrden    = String (viTotalEnc.iIDDiario) + "/" + String (viTotalEnc.iFolioSusp);
+        this._deArtTotal  = viTotalEnc.deTotArticulos; 
+        this._deDescuento = viTotalEnc.deDescuento; 
+        this._deImpTotal  = viTotalEnc.deImporte; 
+        this._cMesero     = viTotalEnc.cCveUsuario;    
+    }     
+    /*Realiza calculos del detalle por partida en la lista*/
+    calculaTotal(iPartida){
+        var viTotal: any;
+        viTotal   = this._vtDetalleArray.find(cMesa=>cMesa.iPartida == iPartida );
+        this._deImporte = viTotal.dePrecVta * viTotal.deCantidad;
+        
+        
+        if(viTotal.cEstado == ""){
+            this._cEstado = "A";
+        }
+        else if(viTotal.cEstado == "Ordenado"){  
+            this._cEstado = "O";
+        }   
+    }
+    
+    /*Recupera la partida del articulo*/
+   /* onItemTap(args: ItemEventData) : void{
+        this._vtDetModArray = [];
+        SESSION.g_iPartida = this._vtDetalleArray[args.index].iPartida;
+        this._iPartida = this._vtDetalleArray[args.index].iPartida; 
+        
+        var respuesta:any;
+        var lista:any  ;
+        var Error:any;
+        var Mensaje:any;
+        console.log("sigo funcionando" + " " + SESSION.g_iPartida );
+        /*Busca si el platillo tiene modificadores
+        this._ServiceMod.getOrdenMod(SESSION.g_cCveCIA, SESSION.g_iOrden, String(this._iPartida)).subscribe((result) => { 
             respuesta = result.body;
             console.log("mensaje->" + respuesta);
             Error   = respuesta.response.oplError;
             Mensaje = respuesta.response.opcError;       
-           
+            
             if (Error == 'true'){
                 alert(Mensaje);
             }else {                                        
                 lista = respuesta.response.tt_vtVtaSuspMod.tt_vtVtaSuspMod;
-                console.log("resultado en mod" + respuesta.response.tt_vtVtaSuspMod.tt_vtVtaSuspMod[0].cModArt);
+                
                 lista.forEach(item=>{ 
                     this._vtDetalleMod = new vtOrdenMod(
                         item.cCveCia,
@@ -358,46 +389,65 @@ export class HomeComponent implements OnInit {
         }, (error) => {
             console.log("result");
             console.log(error);
-        });
+        });     
+    }    */
+/*identifica la partida seleccionada*/
+selectMenu(i, iPartida:any) {
+    this.selectedIndex = i;
+   
+    this._vtDetModArray = [];
+        SESSION.g_iPartida = iPartida;
+        this._iPartida = iPartida; 
+        
+        var respuesta:any;
+        var lista:any  ;
+        var Error:any;
+        var Mensaje:any;
+        
+        /*Busca si el platillo tiene modificadores**/
+        this._ServiceMod.getOrdenMod(SESSION.g_cCveCIA, SESSION.g_iOrden, String(this._iPartida)).subscribe((result) => { 
+            respuesta = result.body;
+            console.log("mensaje->" + respuesta);
+            Error   = respuesta.response.oplError;
+            Mensaje = respuesta.response.opcError;       
+            
+            if (Error == 'true'){
+                alert(Mensaje);
+            }else {                                        
+                lista = respuesta.response.tt_vtVtaSuspMod.tt_vtVtaSuspMod;
+                
+                lista.forEach(item=>{ 
+                    this._vtDetalleMod = new vtOrdenMod(
+                        item.cCveCia,
+                        item.iFolioSusp,
+                        item.iPartidaArt,
+                        item.iPartida,
+                        item.cModSubC,
+                        item.iComensal,
+                        item.cArticulo,   
+                        item.iModArt,   
+                        item.cModArt,
+                        item.iCantMod,   
+                        item.lSubProducto,   
+                        item.cUsuario,
+                        item.dtCreado,   
+                        item.dtModificado,
+                        ); 
 
-        var viTotalEnc: any;
-        viTotalEnc = this._vtOrdenCArray.find(cMesa=>cMesa.iFolioSusp == (viFolioSusp) );
-        this._iComensal = viTotalEnc.iComensales;
-        this._iOrden    = String (viTotalEnc.iIDDiario) + "/" + String (viTotalEnc.iFolioSusp);
-        this._deArtTotal  = viTotalEnc.deTotArticulos; 
-        this._deDescuento = viTotalEnc.deDescuento; 
-        this._deImpTotal  = viTotalEnc.deImporte; 
-        this._cMesero     = viTotalEnc.cCveUsuario;
-
-        
-    }
-         
-    /*Realiza calculos del detalle por partida en la lista*/
-    calculaTotal(iPartida){
-        var viTotal: any;
-        viTotal   = this._vtDetalleArray.find(cMesa=>cMesa.iPartida == iPartida );
-        this._deImporte = viTotal.dePrecVta * viTotal.deCantidad;
-        
-        
-        if(viTotal.cEstado == ""){
-            this._cEstado = "A";
-        }
-        else if(viTotal.cEstado == "Ordenado"){  
-            this._cEstado = "O";
-        }   
+                    this._vtDetModArray.push(this._vtDetalleMod);
+                }); 
+            } 
+        }, (error) => {
+            console.log("result");
+            console.log(error);
+        });     
     }
 
-    /*Recupera la partida del articulo*/
-    onItemTap(args: ItemEventData) : void{
-        SESSION.g_iPartida = this._vtDetalleArray[args.index].iPartida;
-        this._iPartida = this._vtDetalleArray[args.index].iPartida;
-        
-        
-    }
-    
+
+
     /*Muestra informacion de la partida en el detalle*/
-    onDoubleTap(args: GestureEventData) {
-        
+    onDoubleTap() {
+                      
         var viEnc: any;
         var viDet: any;
         var viMod: any;
@@ -407,16 +457,35 @@ export class HomeComponent implements OnInit {
         var vcLibera:string;
         var vcEstado:string;
         var vcEstatus:string;
+        var modificadores:string;
         
-        
-
         viEnc = this._vtOrdenCArray.find(viOrden=>viOrden.iFolioSusp == (SESSION.g_iOrden));
         viDet = this._vtDetalleArray.find(viOrden=>viOrden.iPartida == (this._iPartida));
-        viMod = this._vtDetModArray.find(viOrden=>viOrden.iPartidaArt == (this._iPartida));
         
 
-        console.log("modificadores: -> " + viMod.cModArt);
+        if(this._vtDetModArray.find(viOrden=>viOrden.iPartidaArt == (this._iPartida))){
+            
+            viMod = this._vtDetModArray.find(viOrden=>viOrden.iPartidaArt == (this._iPartida));
+            var viPartida = viMod.iPartidaArt;
+            modificadores = "";
 
+            this._vtDetModArray = this._vtDetModArray.filter(function(dato){
+            if(dato.iPartidaArt == viPartida){
+                if (modificadores == ""){
+                    modificadores = dato.cModArt;
+                } else {
+                    modificadores = modificadores + "," + dato.cModArt;
+                }
+                
+            }else{
+                
+                return true;
+            }
+            });  
+        }
+        else{
+            modificadores = "-";
+        }
         if (viEnc.lLlevar == false){
             vcLlevar = "No";
         }else{
@@ -428,9 +497,7 @@ export class HomeComponent implements OnInit {
         }  else {
             vcLibera= "ORDENADO"
         } 
-
-        
-        
+    
         /*Busca el estatus del platillo y lo asigna*/
         if (viDet.cEstado == "") {
             vcEstado = "-" + "\n"+ "Cancelados: " +  viDet.deCantCan;      
@@ -463,9 +530,6 @@ export class HomeComponent implements OnInit {
                 vcEstado = "Cancelado, Ordenado por: " + viDet.cNomOrdena + ", Solicitud: " + vcLibera + ", Ordenado: " + vdtTO + ", Tiempo Ordenado: " + this._tiempo + " minutos" 
                            + "\n"+ "Cancela: "+ viDet.cNomCancela + " " + vdtFCan +  "\n" + "Cancelados: " + viDet.deCantCan;
             }
-            
-        
-
         }else if(viDet.cEstado == "Ordenado") {      
 
                 viDet = this._vtDetalleArray.find(cMesa=>cMesa.iPartida == SESSION.g_iPartida  );
@@ -498,24 +562,16 @@ export class HomeComponent implements OnInit {
         
 
         }
-        
-            
-          
 
         /*Crea el mensaje de informacion*/
         TNSFancyAlert.showInfo("INFORMACION", "Abrio orden: "  + viEnc.cNomAbre + ", Orden: "  + viEnc.iFolioSusp + ", Llevar: " + vcLlevar + "\n" +
                                 "Registrados: "  + viDet.deCantidad +  "\n" +
-                                "Modif: " + viMod.cModArt + ", " +  viDet.cCompartir + ", " + viDet.cObs + "\n" +
+                                "Modif: " + modificadores + ", " +  viDet.cCompartir + ", " + viDet.cObs + "\n" +
                                 "Estado: " + vcEstado + "\n",
                                 //",Cancelados: " + viCantC.deCantCan, 
                                 "ACEPTAR"  );
-        
     }
-     
-}
-
-   
     
-
-
-
+    
+}
+ 

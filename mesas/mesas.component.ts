@@ -120,8 +120,10 @@ export class MesasComponent implements OnInit {
           
     }
     pintaBoton(iMesa){
+        
         var viMesa: any;
         viMesa   = this._ctMesasHArray.find(cMesa=>cMesa.iMesa == iMesa );
+        
         switch (viMesa.iEstatusMesa) {
             case 1:{
                 let myStyles = {
@@ -129,13 +131,13 @@ export class MesasComponent implements OnInit {
             }; 
             return myStyles;
             }
-            case 2: { this._cTiempo = "00:00:00";
+            case 2: { 
                 let myStyles = {
                     'background-color': 'gray',
             }; 
             return myStyles;
             } 
-            case 3: { this._cTiempo = "00:00:01"
+            case 3: { 
                 let myStyles = { 
                     'background-color': 'greenyellow', 
             }; 
@@ -145,7 +147,6 @@ export class MesasComponent implements OnInit {
     }
 
     pintaTiempo(iMesa){
-
         var viMesa: any;
         viMesa   = this._ctMesasHArray.find(cMesa=>cMesa.iMesa == iMesa );
         if(viMesa.iEstatusMesa == 2){

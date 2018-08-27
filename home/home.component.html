@@ -28,36 +28,38 @@
             <Image src="~/images/orden.png" class="mesa" [nsRouterLink]="['/nOrden']" row="0" col="0"></Image>
             <TextView hint="Orden" class="textOrden" row="0" col="1"   [(ngModel)]='_iOrden'></TextView>
             
-            <AbsoluteLayout *ngFor="let orden of _vtOrdenCArray">
-                    <label [text]='orden.iIDDiario' [ngStyle]="pintaOrden(orden.cEstado)"  
-                    class="textOrdenes" (tap)="recuperaOrden(orden.iFolioSusp)"> </label>                       
-            </AbsoluteLayout>               
+                <AbsoluteLayout *ngFor="let orden of _vtOrdenCArray">
+                    <button [text]='orden.iIDDiario' [ngStyle]="pintaOrden(orden.cEstado)"  
+                    class="textOrdenes" (tap)="recuperaOrden(orden.iFolioSusp)"> </button>                       
+                </AbsoluteLayout>            
         </DockLayout>
 
         <!--<GridLayout rows="auto, auto" columns="auto, *, auto" width="750" height="20" backgroundColor="lightgray">-->
-        <WrapLayout orientation="horizontal" width="750" height="20" backgroundColor="lightgray">
-            <Label text="Comensal" width="75" height="20" backgroundColor="yellow"></Label>
-            <Label text="Producto" width="390" height="20" backgroundColor="yellow"></Label>
-            <Label text="Cantidad" width="75" height="20" backgroundColor="yellow"> </Label> 
-            <Label text="Precio"   width="75" height="20" backgroundColor="yellow"></Label>
-            <Label text="Total"    width="75" height="20" backgroundColor="yellow"> </Label>                                       
-            <Label text="St."      width="60" height="20" backgroundColor="yellow"> </Label>
+        <WrapLayout orientation="horizontal" width="750" height="30" backgroundColor="lightgray" class="textCuenta">
+            <Label text="Comensal" width="90" height="30" backgroundColor="yellow"></Label>
+            <Label text="Producto" width="375" height="30" backgroundColor="yellow"></Label>
+            <Label text="Cantidad" width="75" height="30" backgroundColor="yellow"> </Label> 
+            <Label text="Precio"   width="80" height="30" backgroundColor="yellow"></Label>
+            <Label text="Total"    width="80" height="30" backgroundColor="yellow"> </Label>                                       
+            <Label text="St."      width="50" height="30" backgroundColor="yellow"> </Label>
         <!--</GridLayout>-->
         </WrapLayout>
 
-        <DockLayout >
-            <ListView [items]="_vtDetalleArray" (doubleTap)="onDoubleTap($event)" (itemTap)="onItemTap($event)" id="detalle" class="list-group" style="height:1350px">
-                <ng-template let-vtOrdenDet="item">
-                    <FlexboxLayout flexDirection="row" class="list-group-item">  
-                        <Label [text]="vtOrdenDet.iComensal" style="width: 20%"></Label>                          
-                        <Label [text]="vtOrdenDet.cDescripcion" style="width:55%" ></Label>
-                        <Label [text]="vtOrdenDet.deCantidad" style="width: 15%" ></Label>
-                        <Label [text]="vtOrdenDet.dePrecVta"  style="width: 20%" ></Label>
-                        <Label [ngStyle]="calculaTotal(vtOrdenDet.iPartida)" [text]='_deImporte'  style="width: 20%" ></Label>
-                        <Label [ngStyle]="calculaTotal(vtOrdenDet.iPartida)" [text]='_cEstado'  style="width: 10%" ></Label>
+        <DockLayout [class.highlight]="selectedItem && activeStockTake.UserCode === selectedItem.UserCode">
+            <ListView [items]="_vtDetalleArray"  id="detalle" 
+                      class="list-group" style="height:1350px">
+                <ng-template let-vtOrdenDet="item" let-i="index">
+                    <FlexboxLayout flexDirection="row" class="list-group-item"  >  
+                        <Label [class.Selected]="i===selectedIndex"  class="Unselected" (tap)="selectMenu(i, vtOrdenDet.iPartida)"  (doubleTap)="onDoubleTap()" [text]="vtOrdenDet.iComensal" class="Unselected" (tap)="selectMenu(i)" style="width: 20%" ></Label>                          
+                        <Label [class.Selected]="i===selectedIndex"  class="Unselected" (tap)="selectMenu(i, vtOrdenDet.iPartida)"  (doubleTap)="onDoubleTap()" [text]="vtOrdenDet.cDescripcion" style="width:60%"  ></Label>
+                        <Label [class.Selected]="i===selectedIndex"  class="Unselected" (tap)="selectMenu(i, vtOrdenDet.iPartida)"  (doubleTap)="onDoubleTap()" [text]="vtOrdenDet.deCantidad"   style="width: 15%" ></Label>
+                        <Label [class.Selected]="i===selectedIndex"  class="Unselected" (tap)="selectMenu(i, vtOrdenDet.iPartida)"  (doubleTap)="onDoubleTap()" [text]="vtOrdenDet.dePrecVta"    style="width: 20%" ></Label>
+                        <Label [class.Selected]="i===selectedIndex"  class="Unselected" (tap)="selectMenu(i, vtOrdenDet.iPartida)"  (doubleTap)="onDoubleTap()" [ngStyle]="calculaTotal(vtOrdenDet.iPartida)" [text]='_deImporte'      style="width: 20%" ></Label>
+                        <Label [class.Selected]="i===selectedIndex"  class="Unselected" (tap)="selectMenu(i, vtOrdenDet.iPartida)"  (doubleTap)="onDoubleTap()" [ngStyle]="calculaTotal(vtOrdenDet.iPartida)" [text]='_cEstado'        style="width: 10%" ></Label>
                     </FlexboxLayout>
                 </ng-template>
-            </ListView>                           
+            </ListView>  
+                       
         </DockLayout> 
 
 

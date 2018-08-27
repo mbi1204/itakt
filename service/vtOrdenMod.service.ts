@@ -14,13 +14,15 @@ export class vtOrdenModService{
        
     }
 
-    getOrdenMod(ipcCveCia :string , ipiFolioSusp :string){
+    getOrdenMod(ipcCveCia :string , ipiFolioSusp :string , ipiPartidaArt: string){
+        
         let headers = new HttpHeaders({
             "AuthKey": "",
             "AuthToken": "",
             "Content-Type": "application/json",
             "ipcCveCia": ipcCveCia,
             "ipiFolioSusp": ipiFolioSusp,
+            "ipiPartidaArt": ipiPartidaArt,
             
          });
         
