@@ -1,17 +1,11 @@
 import { Component, OnInit  } from "@angular/core";
-
 import 'nativescript-localstorage';
-
 import {vtOrdenDetService} from '../service/vtOrdenDet.service'; 
 import {vtOrdenCService}   from "../service/vtOrdenC.service";
-
-
 import {vtOrdenDet} from "../model/vtOrdenDet";
 import {ctEmpleado} from "../model/ctEmpleado";
 import {vtOrden}    from "../model/vtOrden";
-
 import {SESSION ,FECHA } from '../service/global';
-
 import { ImageSource, fromBase64, fromFile,fromData } from "tns-core-modules/image-source";
 import {Router,ActivatedRoute,Params} from '@angular/router';
 

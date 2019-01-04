@@ -4,9 +4,6 @@ import { ctArticulo } from '../model/ctArticulo';
 import { ctGrupoService} from "../service/ctGrupo.service";
 import {ctArticuloService} from "../service/ctArticulo.service";
 
-
-
-
 @Component({
     selector: "ns-comanda",
     moduleId: module.id,
@@ -34,7 +31,6 @@ export class ComandaComponent implements OnInit {
 
         //carga Articulos -- tabla ctArticulos
         this.CargaArticulo();
-
     }
 
 
@@ -81,14 +77,9 @@ export class ComandaComponent implements OnInit {
             }, (error)=>{
                 console.log("error" + error);
                 alert(error);                
-
             }
-
         );
-      
-
     } //CargaMenu
-
 
     public CargaArticulo(){
         var respuesta: any;
@@ -151,19 +142,13 @@ export class ComandaComponent implements OnInit {
                             item.cTiempoB,
                             item.cTiempoC,
                             item.cTiempoD,
-
                         );
                      });
-                }
-            
+                }           
             }, (error)=>{
                 console.log("error" + error);
                 alert(error);                
 
             });
-
-
     }
-
-
 }

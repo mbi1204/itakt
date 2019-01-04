@@ -8,16 +8,18 @@ import {vtOrdenMod} from '../model/vtOrdenMod';
 import {SESSION ,FECHA } from '../service/global';
 import {ctEmpleado} from "../model/ctEmpleado";
 
+
 import {vtOrdenCService} from '../service/vtOrdenC.service'; 
 import {vtOrdenDetService} from '../service/vtOrdenDet.service'; 
 import {vtOrdenModService} from '../service/vtOrdenMod.service';
 
 import { TNSFancyAlert } from "nativescript-fancyalert";
-import {Router,ActivatedRoute,Params} from '@angular/router';
+//import {Router,ActivatedRoute,Params} from '@angular/router';
+import {Router} from '@angular/router';
 import { ImageSource, fromBase64, fromFile,fromData } from "tns-core-modules/image-source";
 
 import * as Toast from "nativescript-toast";
-import { GestureEventData } from "tns-core-modules/ui/gestures/gestures";
+//import { GestureEventData } from "tns-core-modules/ui/gestures/gestures";
 
 
 @Component({

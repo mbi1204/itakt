@@ -8,7 +8,7 @@ import { AppComponent } from "./app.component";
 import { ItemService } from "./item/item.service";
 import { ItemsComponent } from "./item/items.component";
 import { ItemDetailComponent } from "./item/item-detail.component";
-import { from } from "rxjs/internal/observable/from";
+import * as from from "rxjs/internal/observable/from";
 import { LoginComponent} from "./login/login.component";
 import { MesasComponent } from "./mesas/mesas.component";
 import { HomeComponent } from "./home/home.component";
