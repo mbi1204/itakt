@@ -12,7 +12,6 @@ import { from } from "rxjs/internal/observable/from";
 import { LoginComponent} from "./login/login.component";
 import { MesasComponent } from "./mesas/mesas.component";
 import { HomeComponent } from "./home/home.component";
-import { HomeComponent2 } from "./home2/home2.component";
 import { NOrdenComponent} from "./orden/nueva.component";
 import { ComandaComponent } from './comanda/comanda.component';
 import { ModificadoresComponent} from './comanda/modificadores.component';
@@ -33,8 +32,7 @@ import { ModificadoresComponent} from './comanda/modificadores.component';
         ItemDetailComponent,
         LoginComponent,
         HomeComponent,
-        MesasComponent,
-       
+        MesasComponent,     
         NOrdenComponent,
            
         
