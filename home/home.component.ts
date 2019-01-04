@@ -1,8 +1,6 @@
 import { Component,OnInit, Inject} from "@angular/core";
-import { ItemEventData, ListView } from "ui/list-view"; 
+import { ItemEventData } from "ui/list-view"; 
 import 'nativescript-localstorage';
-
-
 import {vtOrden} from '../model/vtOrden'; 
 import {vtOrdenDet} from '../model/vtOrdenDet'; 
 import {vtOrdenMod} from '../model/vtOrdenMod';
