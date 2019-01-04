@@ -82,8 +82,7 @@ export class vtOrdenDet{
         public dtCancela:string,
         public dtCambioP:string,
         public dtDescuento:string,
-        public lLibera:boolean,
-        )
+        public lLibera:boolean)
         {}
         
         

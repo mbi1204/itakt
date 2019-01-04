@@ -3,12 +3,12 @@ import { Component, OnInit  } from "@angular/core";
 import 'nativescript-localstorage';
 
 import {vtOrdenDetService} from '../service/vtOrdenDet.service'; 
-import {vtOrdenCService}   from "~/service/vtOrdenC.service";
+import {vtOrdenCService}   from "../service/vtOrdenC.service";
 
 
-import {vtOrdenDet} from "~/model/vtOrdenDet";
+import {vtOrdenDet} from "../model/vtOrdenDet";
 import {ctEmpleado} from "../model/ctEmpleado";
-import {vtOrden}    from "~/model/vtOrden";
+import {vtOrden}    from "../model/vtOrden";
 
 import {SESSION ,FECHA } from '../service/global';
 
@@ -23,16 +23,11 @@ import * as Toast from "nativescript-toast";
     moduleId: module.id,                 
     templateUrl: "../home/home.component.html",
     styleUrls:  ["../home/home.component.css"] ,
-    providers: [vtOrdenDetService, vtOrdenCService],  
-    
-   
+    providers: [vtOrdenDetService, vtOrdenCService],    
 })
-
 
 export class DetalleComponent implements OnInit {
     
-   
-
     public _vtDetalleObj:vtOrdenDet;
     public _vtDetalleArray:Array<vtOrdenDet> = [];
     public _vtFolio:string;
@@ -42,8 +37,7 @@ export class DetalleComponent implements OnInit {
     public _cEstado:string;
     public _cNombre:string;
     public _ctEmpleado:ctEmpleado;
-    public _image      :ImageSource; 
-    
+    public _image      :ImageSource;    
     public _deArtTotal :number;
     public _deDescuento:number;
     public _deImpTotal :number;
@@ -55,13 +49,10 @@ export class DetalleComponent implements OnInit {
     public _vtOrdenCObj:vtOrden;
     public _vtOrdenCArray:Array<vtOrden> = [];
 
-    
-    
+      
     constructor( private _Service: vtOrdenDetService, private _ServiceC: vtOrdenCService) {     
     }
     
-    
-
     ngOnInit(): void{
         console.log("detalle.component.ts");
              
@@ -136,11 +127,12 @@ export class DetalleComponent implements OnInit {
                         item.cTipoDesc,
                         item.iCOrigen,
                         item.iCDestino,
-                        item.deTCantidad,
+                        item.iTCantidad,  // 4/01/2019 ADG cambie de de a i
                         item.lTraspaso,
                         item.iGrupo,
                         item.lCancelado,
                         item.deCantDesc,
+                        item.deImpDesc,   //4/01/2019 ADG agrege campo
                         item.deCantCanc,
                         item.cUsuOrdena,
                         item.cNomOrdena,
@@ -157,7 +149,7 @@ export class DetalleComponent implements OnInit {
                         item.dtCancela,
                         item.dtCambioP,
                         item.dtDescuento,
-                        item.lLibera,); 
+                        item.lLibera); 
 
                     this._vtDetalleArray.push(this._vtDetalleObj);
                 }); 
@@ -167,22 +159,17 @@ export class DetalleComponent implements OnInit {
             console.log(error);
         });   
 
-        
-
         this._ServiceC.getOrdenC(SESSION.g_cCveCIA , SESSION.g_cMesa).subscribe((result) => { 
             respuesta = result.body;
             console.log("mensaje->" + respuesta);
             Error   = respuesta.response.oplError;
             Mensaje = respuesta.response.opcError;      
-            
-                
+                           
             if (Error == 'true'){
                 alert(Mensaje);
             }else {
                 lista = respuesta.response.tt_vtVtaSusp.tt_vtVtasusp;
-                
-                
-                                
+                                                
                 lista.forEach(item=>{ 
                     this._vtOrdenCObj = new vtOrden(
                         item.cCveCia,
@@ -225,10 +212,8 @@ export class DetalleComponent implements OnInit {
                         item.cUsuAbre,
                         item.cNomAbre,
                         item.dtTerminal,
-                    ); 
-                    
-                    this._vtOrdenCArray.push(this._vtOrdenCObj);
-                                           
+                    );                     
+                    this._vtOrdenCArray.push(this._vtOrdenCObj);                                          
                 }); 
             } 
         }
@@ -236,9 +221,7 @@ export class DetalleComponent implements OnInit {
         , (error) => {
             console.log("result");
             console.log(error);
-        });
-        
-                       
+        });                      
     }
     
     onItemTap(args: ItemEventData) : void{
@@ -250,24 +233,20 @@ export class DetalleComponent implements OnInit {
         var viTotal: any;
         viTotal   = this._vtDetalleArray.find(cMesa=>cMesa.iPartida == iPartida );
         this._deImporte = viTotal.dePrecVta * viTotal.deCantidad;
-        
-        
+               
         if(viTotal.cEstado == ""){
             this._cEstado = "A";
         }
         else if(viTotal.cEstado == "Ordenado"){  
             this._cEstado = "O";
-        }   
-        
-        
+        }          
     }
     totEnc(){
         if (SESSION.g_vtOden != null){
            
             var viTotalEnc: any;
             viTotalEnc = this._vtOrdenCArray.find(cMesa=>cMesa.iFolioSusp ==  (SESSION.g_iOrden) );
-            
-            
+                       
             this._ctEmpleado =  SESSION.g_ctEmpleado;
             this._image = fromBase64(this._ctEmpleado.bImagen);
             this._image.toBase64String( "jpg", 100);                     
@@ -280,29 +259,25 @@ export class DetalleComponent implements OnInit {
             this._iComensal = viTotalEnc.iComensales;
             this._iOrden    = String (viTotalEnc.iIDDiario) + "/" + String (viTotalEnc.iFolioSusp)      ;
             
-
             this._cNombre = this._ctEmpleado.cNombre    + ' ' +
                             this._ctEmpleado.cApellidoP + ' ' +  
                             this._ctEmpleado.cApellidoM ;
             
-        } 
-
+        }
     }
     pintaOrden(cEstado){
         var viOrden: any;
         var viOrdenes: any;
         var viTotalEnc: any;
 
-
-        viOrden   =  this._vtOrdenCArray.find(cMesa=>cMesa.cMesa ==  String(SESSION.g_iMesa) );
-        viOrdenes =  this._vtOrdenCArray.find(cMesa=>cMesa.cMesa ==  String(SESSION.g_iMesa) );
+        viOrden   =  this._vtOrdenCArray.find(cMesa=>cMesa.cMesa      ==  String(SESSION.g_iMesa) );
+        viOrdenes =  this._vtOrdenCArray.find(cMesa=>cMesa.cMesa      ==  String(SESSION.g_iMesa) );
         viTotalEnc = this._vtOrdenCArray.find(cMesa=>cMesa.iFolioSusp ==  (SESSION.g_iOrden) );
         
         this._iOrden  = viTotalEnc.iIDDiario + "/" + viTotalEnc.iFolioSusp;
         this._cMesero = viOrden.cUSuario
         this._iComensal = viTotalEnc.iComensales;
         
-
         switch (cEstado) {
             case "PENDIENTE":{
                 let myStyles = {
@@ -326,8 +301,6 @@ export class DetalleComponent implements OnInit {
         viOrdenes =  this._vtOrdenCArray.find(cMesa=>cMesa.iFolioSusp ==  (viFolioSusp) );
         Toast.makeText("Orden Seleccionada " + viOrden.iIDDiario + "/" + viOrden.iFolioSusp).show() ;
         
-    }
-   
-    
+    }   
 }
 
