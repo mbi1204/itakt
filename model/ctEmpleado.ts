@@ -5,9 +5,9 @@ obs  : modelo de la tabla empleado
 */
 
 export class ctEmpleado{
-    constructor(public cCveCia :string,
+    constructor(public cCveCia:string,
                 public iEmpleado:number,
-                public cCveEmp :string,
+                public cCveEmp:string,
                 public cPassword:string,
                 public cNombre:string,
                 public cDireccion:string,
@@ -24,6 +24,5 @@ export class ctEmpleado{
                 public cUsuario:String,
                 public dtCreado:Date,
                 public dtModificado:Date
-
             ){}
 }

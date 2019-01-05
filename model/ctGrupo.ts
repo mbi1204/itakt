@@ -5,7 +5,7 @@ obs  : modelo de la tabla ctGrupo
 */
 
 export class ctGrupo{
-    constructor(public cCveCia: string,
+    constructor(public cCveCia:string,
                 public iGrupoID:number,
                 public cDescripcion:string,
                 public cImagen:string,
@@ -13,6 +13,6 @@ export class ctGrupo{
                 public dtCreado:Date,
                 public dtModificado:Date,
                 public cUsuario:string,
-                public iColor:number,
+                public iColor:number
     ){}
 }

@@ -4,9 +4,9 @@ fecha: 27/06/2018
 obs  : modelo de la tabla mesas 
 */
 export class ctMesas{
-    constructor(public cCveCia :string,
+    constructor(public cCveCia:string,
                 public iSucursal:number,
-                public iMesa :number,
+                public iMesa:number,
                 public cMesa:string,
                 public cObs:string,
                 public lActiva:boolean,

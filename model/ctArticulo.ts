@@ -43,7 +43,7 @@ export class ctArticulo{
                 public cTiempoA:string,
                 public cTiempoB:string,
                 public cTiempoC:string,
-                public cTiempoD:string,
+                public cTiempoD:string
 
 
             ){}
