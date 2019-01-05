@@ -5,9 +5,9 @@ obs  : modelo de la tabla articulo
 */
 
 export class ctArticulo{
-    constructor(public cCveCia :string,
+    constructor(public cCveCia:string,
                 public iArticulo:number,
-                public cArticulo :string,
+                public cArticulo:string,
                 public cDescripcion:string,
                 public cDescripcionVta:string,
                 public cCveAlterna:string,

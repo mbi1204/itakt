@@ -85,7 +85,7 @@ export class ComandaComponent implements OnInit {
         var respuesta: any;
         var lista: any  ;
         var Error: any;
-        var Mensaje: any;
+        var Mensaje1: any;
 
         this._ctGrupoService.get("MFELIZ").subscribe(
             (result) => {  
@@ -94,10 +94,10 @@ export class ComandaComponent implements OnInit {
                 respuesta = result.body;
                
                 Error   = respuesta.response.oplError;
-                Mensaje = respuesta.response.opcMensage;
+                Mensaje1 = respuesta.response.opcMensage;
     
                 if (Error == 'true'){
-                    alert(Mensaje);
+                    alert(Mensaje1);
                 }else {
                     lista = respuesta.response.tt_ctArticulo.tt_ctArticulo;
                     

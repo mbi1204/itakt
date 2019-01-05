@@ -41,30 +41,30 @@ export class HomeComponent implements OnInit {
    public _vtDetalleMod:vtOrdenMod;
    public _vtDetModArray:Array<vtOrdenMod> = [];
 
-   public _cFecha     :string;
-   public _ctEmpleado :ctEmpleado;
-   public _cCveCia    :string;   
-   public _cNombre    :string;
-   public _iMesa      :number;
-   public _cMesa      :string;
-   public _image      :ImageSource; 
-   public _vtOrden    :vtOrden;
-   public _iComensal  :number;
-   public _iOrden     :string;
-   public _iCuentas   :string;
-   public _iOrdenes   :string;
-   public _FolioSusp  :string;
-   public _cMesero    :string;
-   public _deArtTotal :number;
+   public _cFecha:string;
+   public _ctEmpleado:ctEmpleado;
+   public _cCveCia:string;   
+   public _cNombre:string;
+   public _iMesa:number;
+   public _cMesa:string;
+   public _image:ImageSource; 
+   public _vtOrden:vtOrden;
+   public _iComensal:number;
+   public _iOrden:string;
+   public _iCuentas:string;
+   public _iOrdenes:string;
+   public _FolioSusp:string;
+   public _cMesero:string;
+   public _deArtTotal:number;
    public _deDescuento:number;
-   public _deImpTotal :number;
+   public _deImpTotal:number;
    public _deImporte:number;
    public _cEstado:string;
    public _iPartida:number;
    public _tiempo:string;
    public selectedOption: string = "";
-   public prop: string = "Item 1";
-   selectedIndex: number;
+   public prop:string = "Item 1";
+   selectedIndex:number;
 
    
    
